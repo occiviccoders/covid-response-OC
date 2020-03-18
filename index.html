@@ -1,0 +1,472 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>California Corona Watch</title>
+    </head>
+    <body>
+        <div id="map" style="width: 75vw; height: 80vh;"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
+        <script>
+            const CACenter = [-122.70703125, 36.09023980307208] // center data on LA
+            let cacv = {};
+            // initiate MapBox
+            mapboxgl.accessToken = "pk.eyJ1IjoiaW5pdGlhbGFwcHMiLCJhIjoiY2pzMnBzZGZnMDM0azQ5bDdyOHdraHV1ZyJ9.JdYkI5UwxhJgJOkbm2_8rw";
+            map = new mapboxgl.Map({
+                container: "map",
+                style: 'mapbox://styles/mapbox/light-v9',
+                center: CACenter,
+                zoom: 4.5
+            }); 
+            // county data           
+            cacv.counties = [
+                {
+                "name":"Alameda",
+                "count":0,
+                "lng":-121.7195,
+                "lat":37.6017,
+                },
+                {
+                "name":"Alpine",
+                "count":0,
+                "lng":-119.8815,
+                "lat":38.5941,
+                },
+                {
+                "name":"Amador",
+                "count":0,
+                "lng":-120.7741,
+                "lat":38.3489,
+                },
+                {
+                "name":"Butte",
+                "count":0,
+                "lng":-121.5370,
+                "lat":39.6254,
+                },
+                {
+                "name":"Calaveras",
+                "count":0,
+                "lng":-120.6805,
+                "lat":38.1960,
+                },
+                {
+                "name":"Colusa",
+                "count":0,
+                "lng":-122.2654,
+                "lat":39.1041,
+                },
+                {
+                "name":"Contra Costa",
+                "count":0,
+                "lng":-121.9018,
+                "lat":37.8534,
+                },
+                {
+                "name":"Del Norte",
+                "count":0,
+                "lng":-123.9660,
+                "lat":41.7076,
+                },
+                {
+                "name":"El Dorado",
+                "count":0,
+                "lng":-120.4358,
+                "lat":38.7426,
+                },
+                {
+                "name":"Fresno",
+                "count":0,
+                "lng":-119.2321,
+                "lat":36.9859,
+                },
+                {
+                "name":"Glenn",
+                "count":0,
+                "lng":-122.4467,
+                "lat":39.6438,
+                },
+                {
+                "name":"Humboldt",
+                "count":0,
+                "lng":-123.8695,
+                "lat":40.7450,
+                },
+                {
+                "name":"Imperial",
+                "count":0,
+                "lng":-115.4734,
+                "lat":33.0114,
+                },
+                {
+                "name":"Inyo",
+                "count":0,
+                "lng":-117.5496,
+                "lat":36.3092,
+                },
+                {
+                "name":"Kern",
+                "count":0,
+                "lng":-118.8597,
+                "lat":35.4937,
+                },
+                {
+                "name":"Kings",
+                "count":0,
+                "lng":-119.8815,
+                "lat":36.0988,
+                },
+                {
+                "name":"Lake",
+                "count":0,
+                "lng":-122.8084,
+                "lat":39.0840,
+                },
+                {
+                "name":"Lassen",
+                "count":0,
+                "lng":-120.7120,
+                "lat":40.5394,
+                },
+                {
+                "name":"Los Angeles",
+                "count":0,
+                "lng":-118.2437,
+                "lat":34.0522,
+                },
+                {
+                "name":"Madera",
+                "count":0,
+                "lng":-119.6963,
+                "lat":37.2519,
+                },
+                {
+                "name":"Marin",
+                "count":0,
+                "lng":-122.7633,
+                "lat":38.0834,
+                },
+                {
+                "name":"Mariposa",
+                "count":0,
+                "lng":-119.9679,
+                "lat":37.4894,
+                },
+                {
+                "name":"Mendocino",
+                "count":0,
+                "lng":-123.4384,
+                "lat":39.5500,
+                },
+                {
+                "name":"Merced",
+                "count":0,
+                "lng":-120.7120,
+                "lat":37.2010,
+                },
+                {
+                "name":"Modoc",
+                "count":0,
+                "lng":-120.6294,
+                "lat":41.4565,
+                },
+                {
+                "name":"Mono",
+                "count":0,
+                "lng":-118.9529,
+                "lat":37.9219,
+                },
+                {
+                "name":"Monterey",
+                "count":0,
+                "lng":-121.3542,
+                "lat":36.3136,
+                },
+                {
+                "name":"Napa",
+                "count":0,
+                "lng":-122.2654,
+                "lat":38.5025,
+                },
+                {
+                "name":"Nevada",
+                "count":0,
+                "lng":-121.1710,
+                "lat":39.1347,
+                },
+                {
+                "name":"Orange",
+                "count":0,
+                "lng":-117.8311,
+                "lat":33.7175,
+                },
+                {
+                "name":"Placer",
+                "count":0,
+                "lng":-120.8039,
+                "lat":39.0916,
+                },
+                {
+                "name":"Plumas",
+                "count":0,
+                "lng":-120.8039,
+                "lat":39.9927,
+                },
+                {
+                "name":"Riverside",
+                "count":0,
+                "lng":-117.3961,
+                "lat":33.9533,
+                },
+                {
+                "name":"Sacramento",
+                "count":0,
+                "lng":-121.3542,
+                "lat":38.4747,
+                },
+                {
+                "name":"San Benito",
+                "count":0,
+                "lng":-120.9876,
+                "lat":36.5761,
+                },
+                {
+                "name":"San Bernardino",
+                "count":0,
+                "lng":-116.4194,
+                "lat":34.9592,
+                },
+                {
+                "name":"San Diego",
+                "count":0,
+                "lng":-117.1611,
+                "lat":32.7157,
+                },
+                {
+                "name":"San Francisco",
+                "count":0,
+                "lng":-122.4194,
+                "lat":37.7749,
+                },
+                {
+                "name":"San Joaquin",
+                "count":0,
+                "lng":-121.1710,
+                "lat":37.9176,
+                },
+                {
+                "name":"San Luis Obispo",
+                "count":0,
+                "lng":-120.4358,
+                "lat":35.3102,
+                },
+                {
+                "name":"San Mateo",
+                "count":0,
+                "lng":-122.4014,
+                "lat":37.4337,
+                },
+                {
+                "name":"Santa Barbara",
+                "count":0,
+                "lng":-119.6982,
+                "lat":34.4208,
+                },
+                {
+                "name":"Santa Clara",
+                "count":0,
+                "lng":-121.8907,
+                "lat":37.3337,
+                },
+                {
+                "name":"Santa Cruz",
+                "count":0,
+                "lng":-121.9580,
+                "lat":37.0454,
+                },
+                {
+                "name":"Shasta",
+                "count":0,
+                "lng":-121.8474,
+                "lat":40.7909,
+                },
+                {
+                "name":"Sierra",
+                "count":0,
+                "lng":-120.2513,
+                "lat":39.5533,
+                },
+                {
+                "name":"Siskiyou",
+                "count":0,
+                "lng":-122.5770,
+                "lat":41.7743,
+                },
+                {
+                "name":"Solano",
+                "count":0,
+                "lng":-121.9018,
+                "lat":38.3105,
+                },
+                {
+                "name":"Sonoma",
+                "count":0,
+                "lng":-122.9888,
+                "lat":38.5780,
+                },
+                {
+                "name":"Stanislaus",
+                "count":0,
+                "lng":-120.9876,
+                "lat":37.5091,
+                },
+                {
+                "name":"Sutter",
+                "count":0,
+                "lng":-121.6739,
+                "lat":39.0220,
+                },
+                {
+                "name":"Tehama",
+                "count":0,
+                "lng":-122.1746,
+                "lat":40.0982,
+                },
+                {
+                "name":"Trinity",
+                "count":0,
+                "lng":-123.0623,
+                "lat":40.6329,
+                },
+                {
+                "name":"Tulare",
+                "count":0,
+                "lng":2-118.8597,
+                "lat":36.134,
+                },
+                {
+                "name":"Tuolumne",
+                "count":0,
+                "lng":-119.9741,
+                "lat":38.0297,
+                },
+                {
+                "name":"Ventura",
+                "count":0,
+                "lng":-119.1391,
+                "lat":34.3705,
+                },
+                {
+                "name":"Yolo",
+                "count":0,
+                "lng":-121.9018,
+                "lat":38.7646,
+                },
+                {
+                "name":"Yuba",
+                "count":0,
+                "lng":-121.3999,
+                "lat":39.2547,
+                }
+            ];
+
+            // scrape for the covid counts
+            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.livescience.com/california-coronavirus-updates.html'), function (data) {
+                // get raw data
+                cacv.raw = data.contents;
+                // init geojson
+                cacv.geoJson = {
+                    "type": "FeatureCollection",
+                    "features": []
+                };
+                // parse data
+                cacv.counties.map(function(county){
+                    // parse count
+                    let count = 0;
+                    let countyString = cacv.raw.match('<li>(.*?)' + county.name + '(.*?)</li>');
+                    if(countyString && countyString.length){
+                        count = countyString[2].match(/\d+/g)[0];
+                        county.count = Number(count);
+                    }
+                    // create a geojson feature
+                    cacv.geoJson.features.push({
+                        "type": "Feature",
+                        "properties": county,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                county.lng,
+                                county.lat
+                            ]
+                        }
+                    });
+                });
+                
+                console.log(cacv.geoJson)
+                // Load Map
+                map.on('load', function() {
+                    // Create a popup, but don't add it to the map yet.
+                    var popup = new mapboxgl.Popup({
+                        closeButton: false,
+                        closeOnClick: false
+                    });
+
+                    map.addSource("countyData", {
+                        "type": "geojson",
+                        "data": cacv.geoJson
+                    });
+
+                    map.addLayer({
+                        'id': 'county',
+                        'type': 'circle',
+                        'source': 'countyData',
+                        "paint": {
+                            "circle-opacity": {
+                                "base": 1.8,
+                                "stops": [
+                                    [0, 0.1]
+                                ]
+                            },
+                            'circle-radius': {
+                                'property': 'count',
+                                "base": 1,
+                                'stops': [
+                                    [{zoom: 0,  value: 0}, 0],
+                                    [{zoom: 0,  value: 5}, 5],
+                                    [{zoom: 0,  value: 10}, 10],
+                                    [{zoom: 0,  value: 15}, 15],
+                                    [{zoom: 0,  value: 20}, 20],
+                                    [{zoom: 0,  value: 30}, 30],
+                                ]
+                            }
+                        }
+                    });
+
+                    map.on('mouseenter', 'county', function(e) {
+            
+                        // Change the cursor style as a UI indicator.
+                        map.getCanvas().style.cursor = 'pointer';
+                        let coordinates = e.features[0].geometry.coordinates.slice();
+                        let description = "<b>" + e.features[0].properties.name + "</b><br>" +
+                            "<span>Count: " + e.features[0].properties.count + "</span><br>";
+                        
+                        // Ensure that if the map is zoomed out such that multiple
+                        // copies of the feature are visible, the popup appears
+                        // over the copy being pointed to.
+                        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                        }
+                
+                        // Populate the popup and set its coordinates
+                        // based on the feature found.
+                        popup.setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
