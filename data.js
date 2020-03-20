@@ -317,5 +317,26 @@ const cvocData = {
           ]
         }
       },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "The Courtyard",
+          "category": "Homeless Shelter",
+          "class": "homelessshelter",
+          "address": "400 W Santa Ana Blvd",
+          "city": "Santa Ana",
+          "state": "CA",
+          "zip": "92701",
+          "phone": "(714) 910-0408",
+          "web":"https://www.redcrossblood.org/local-homepage/location/fullerton-blood-donation-center.html?utm_source=GMBlisting&utm_medium=organic",
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -117.8711395,
+            33.7496483
+          ]
+        }
+      },
     ]
   }
