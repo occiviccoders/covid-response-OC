@@ -28,7 +28,7 @@ map = new mapboxgl.Map({
     container: "map",
     style: 'mapbox://styles/mapbox/light-v9',
     center: OCgeo,
-    zoom: 8
+    zoom: 9,
 }); 
 
 // Load Map
@@ -103,7 +103,7 @@ map.on('load', function() {
         areaSidebar.innerHTML = '';
         // adds all element to the bottom
         sideElementAll.classList.add('row');
-        sideElementAll.innerHTML = '<div class="col"><span class="tag" onclick="setCategory()"> All</span></div>';
+        sideElementAll.innerHTML = '<div class="col"><span>All</span></div>';
         areaSidebar.appendChild(sideElementAll);  
         // Add all areas to sidebar
         cvocData.features.reduce(function(returnArray, place){
@@ -124,12 +124,11 @@ map.on('load', function() {
                 let sideElement = document.createElement('div');
                 // for each category add a sidebar element
                 sideElement.classList.add('row');
-                sideElement.innerHTML = '<div class="col"><span class="tag ' + place.properties.class + '" onclick="setCategory(' + category + ')">' + place.properties.category + '</span></div>';
+                sideElement.innerHTML = '<div class="col"><span class="' + place.properties.class + '" onclick="setCategory(' + category + ')">' + place.properties.category + '</span></div>';
                 areaSidebar.appendChild(sideElement);                        
             }
         });                          
     }
-
     // load sidebar
     cvoc.loadSidebar();
 });
