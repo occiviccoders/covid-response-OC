@@ -15,7 +15,7 @@ const fetchData = async (url) => {
         if(has>-1 && not<0){
             return $(this);
         }
-    }).parsetable(false, false, true);;
+    }).parsetable(false, false, true);
     // jsonify data    
     for (x = 1; x < 8; x++) {
         for (y = 3; y < 9; y++) {
