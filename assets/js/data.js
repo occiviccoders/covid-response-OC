@@ -1,6 +1,35 @@
 // this is not the best way to collect data, but needed something fast!
 const cvoc = [
   {
+    label:"Mar 17",
+    data:[
+      { category: 'Total Cases', type: 'Cases', count: '29' },
+      { category: 'Total Cases', type: 'Travel Related', count: '15' },
+      { category: 'Total Cases', type: 'Person to Person Spread*', count: '5' },
+      { category: 'Total Cases', type: 'Community Acquired**', count: '8' },
+      { category: 'Total Cases', type: 'Under Investigation', count: '1' },
+      { category: 'Male', type: 'Cases', count: '19' },
+      { category: 'Male', type: 'Travel Related', count: '8' },
+      { category: 'Male', type: 'Person to Person Spread*', count: '5' },
+      { category: 'Male', type: 'Community Acquired**', count: '6' },
+      { category: 'Female', type: 'Cases', count: '10' },
+      { category: 'Female', type: 'Travel Related', count: '7' },
+      { category: 'Female', type: 'Community Acquired**', count: '2' },
+      { category: 'Female', type: 'Under Investigation', count: '1' },
+      { category: '18 - 49', type: 'Cases', count: '14' },
+      { category: '18 - 49', type: 'Travel Related', count: '6' },
+      { category: '18 - 49', type: 'Person to Person Spread*', count: '5' },
+      { category: '18 - 49', type: 'Community Acquired**', count: '2' },
+      { category: '18 - 49', type: 'Under Investigation', count: '1' },
+      { category: '50 - 64', type: 'Cases', count: '9' },
+      { category: '50 - 64', type: 'Travel Related', count: '6' },
+      { category: '50 - 64', type: 'Community Acquired**', count: '3' },
+      { category: '≥ 65', type: 'Cases', count: '6' },
+      { category: '≥ 65', type: 'Travel Related', count: '3' },
+      { category: '≥ 65', type: 'Community Acquired**', count: '3' },  
+    ]
+  },
+  {
     label:"Mar 18",
     data:[
       { category: 'Total Cases', type: 'Cases', count: '42' },
