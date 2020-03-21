@@ -1,12 +1,11 @@
 const axios = require("axios");
 const cheerio = require('cheerio'),
 cheerioTableparser = require('cheerio-tableparser');
-
+let jsonData = [];
 // scrape for the covid counts
 const OCUrl = "https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus";
 const fetchData = async (url) => {
     const result = await axios.get(url);
-
     const $ = cheerio.load(result.data);
     cheerioTableparser($);
     let text = $('table').filter(function (i, element) {
@@ -15,24 +14,19 @@ const fetchData = async (url) => {
         if(has>-1 && not<0){
             return $(this);
         }
-        
-    }).parsetable(true, true, true);;
-    console.log(text)
-    
+    }).parsetable(false, false, true);;
+    // jsonify data    
+    for (x = 1; x < 8; x++) {
+        for (y = 3; y < 9; y++) {
+            if(Number(text[x][y])){
+                jsonData.push({
+                    category:text[x][2],
+                    type:text[0][y],
+                    count: text[x][y],
+                })
+            }
+        }
+    }
+    console.log(jsonData)    
 };
 fetchData(OCUrl);
-/*
-$.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus'), function (data) {
-    // get raw data
-    let raw = data.contents;
-    var parser = new DOMParser();
-    var doc    = parser.parseFromString(raw, "text/html");
-    var obj    = [].map.call(doc.querySelectorAll('tr'), tr => {
-        return [].slice.call(tr.querySelectorAll('td')).reduce( (a,b,i) => {
-            return a['prop' + (i+1)] = b.textContent, a;
-        }, {});
-    });
-
-    console.log(obj)
-
-});*/
