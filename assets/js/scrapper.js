@@ -1,3 +1,4 @@
+// Currently running as a script to fetch data
 const axios = require("axios");
 const cheerio = require('cheerio'),
 cheerioTableparser = require('cheerio-tableparser');
