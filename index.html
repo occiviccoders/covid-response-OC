@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>Orange County Corona Watch</title>
+        <title>OC Corona Virus (Covid-19) Community Watch</title>
         <link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href='./public/css/cvoc.css' rel='stylesheet' />
@@ -20,16 +20,40 @@
                 </div>
             </div>
         </nav>
-        <div class="container py-4">
+        <div class="container py-5 my-5">
             <div class="row text-center">
                 <div class="col">
-                    <h1>Let's Beat The Curve, Orange County!</h1>
+                    <h1 class="mt-5">OC Corona Virus (Covid-19) Community Watch</h1>
                     <p>Data is taken from <a href="https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus">OC Health Care Agency</a>. This dashboard is not affiliated with OC Health Care Agency.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container py-5 mb-5">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class="my-4">Let's Beat The Curve, Orange County!</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <canvas id="chart_totals"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="container py-5 mb-5">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class="my-4">How It's Spreading?</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <canvas id="chart_age_by_time"></canvas>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <p><span style="color:rgba(6, 110, 83, 1);">*Contact to a known case.</span> | <span style="color:rgba(183, 122, 10, 1);">**Not travel related or contact to known case</span>.</p>
                 </div>
             </div>
         </div>
