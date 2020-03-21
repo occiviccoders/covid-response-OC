@@ -1,0 +1,31 @@
+{
+  "name": "covid-response-oc",
+  "version": "1.0.0",
+  "description": "An app to help local OC residents through covid 19",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "cheerio-tableparser": "^1.0.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/occiviccoders/covid-response-OC.git"
+  },
+  "author": "Andrew Akagawa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/occiviccoders/covid-response-OC/issues"
+  },
+  "homepage": "https://github.com/occiviccoders/covid-response-OC#readme"
+}

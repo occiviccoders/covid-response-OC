@@ -4,14 +4,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>California Corona Watch</title>
-        <link rel="shortcut icon" type="image/png" href="favicon.png">
+        <link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.css' rel='stylesheet' />
         <link href='./public/css/cvoc.css' rel='stylesheet' />
     </head>
     <body>
         <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top" role="tablist">
-            <a class="navbar-brand" href="index.html"><img src="OCCC-logo-transp.png" width="100%" alt="OCCC-logo"></a>
+            <a class="navbar-brand" href="index.html"><img src="./assets/img/OCCC-logo-transp.png" width="100%" alt="OCCC-logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -22,22 +21,18 @@
             </div>
         </nav>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-9">
-                    <div id="map"></div>
+            <div class="row text-center">
+                <div class="col">
+                    <h1>Let's Beat The Curve, Orange County!</h1>
                 </div>
-                <div id="sidebar-list" class="col-sm-3"></div>
             </div>
         </div>
         <footer>
             <p style="text-align: center;">Copyright 2020. All Rights Reserved.</p>
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.0/mapbox-gl.js'></script>
-        <script src='data.js'></script>
-        <script src='./public/js/cvoc.js'></script>
+        <script src='./assets/js/scrapper.js'></script>
+        <script src='./assets/js/data.js'></script>
+        <script src='./public/js/main.js'></script>
     </body>
 </html>
