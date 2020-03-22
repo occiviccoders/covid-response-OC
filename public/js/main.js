@@ -128,7 +128,10 @@ cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
             mode: 'index'
         },
         legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+                fontSize: 16
+            }
         },
         title: {
             display: true,
