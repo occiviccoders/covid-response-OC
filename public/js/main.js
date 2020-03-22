@@ -2,10 +2,12 @@
 // use cvoc for data object
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
+const ctx_gender = document.getElementById('chart_gender').getContext('2d');  // for the chart
+const ctx_age = document.getElementById('chart_age').getContext('2d');  // for the chart
 const ctx_age_by_time = document.getElementById('chart_age_by_time').getContext('2d');  // for the chart
 
 // set the categories
-cvoc.categories = ['Total Cases', 'Male', 'Female', '<18', '18 - 49', '≥ 65'];
+cvoc.categories = ['Total Cases', 'Male', 'Female', '<18', '18 - 49', '50 - 64', '≥ 65'];
 
 // gets counts by category and type
 cvoc.getCounts = function(category, type, date){
@@ -41,6 +43,54 @@ cvoc.chartTotals = function(){
             type: 'line',
         }],
     });
+}
+
+// parse the count data by gender
+cvoc.chartByGender = function(){
+    const last = cvoc.counts.slice(-1)[0];
+    const data = last.data.reduce(function(returnArray, datum){
+        if (datum.category==='Male' && datum.type==='Cases'){
+            returnArray[0] += Number(datum.count);
+        }
+        if (datum.category==='Female' && datum.type==='Cases'){
+            returnArray[1] += Number(datum.count);
+        }
+        return returnArray;
+    },[0, 0])
+    return {
+        labels:['Male', 'Female'],
+        datasets: [{
+            data: data,
+            backgroundColor: ['rgba(187, 26, 163, 0.4)','rgba(63, 127, 191, 0.6)']
+        }],
+    }
+}
+
+// parse the count data by age
+cvoc.chartByAge = function(){
+    const last = cvoc.counts.slice(-1)[0];
+    const data = last.data.reduce(function(returnArray, datum){
+        if (datum.category==='<18' && datum.type==='Cases'){
+            returnArray[0] += Number(datum.count);
+        }
+        if (datum.category==='18 - 49' && datum.type==='Cases'){
+            returnArray[1] += Number(datum.count);
+        }
+        if (datum.category==='50 - 64' && datum.type==='Cases'){
+            returnArray[2] += Number(datum.count);
+        }
+        if (datum.category==='≥ 65' && datum.type==='Cases'){
+            returnArray[3] += Number(datum.count);
+        }
+        return returnArray;
+    },[0, 0, 0, 0])
+    return {
+        labels:['Under 18', '18 to 49', '50 to 64', '65 and Over'],
+        datasets: [{
+            data: data,
+            backgroundColor: ['rgba(37, 80, 222, 1)','rgba(37, 80, 222, 0.8)','rgba(37, 80, 222, 0.6)','rgba(37, 80, 222, 0.4)']
+        }],
+    }
 }
 
 // parse the count data into chart categories data
@@ -91,7 +141,7 @@ cvoc.categoryByTime = function(category){
 // load category buttons
 cvoc.loadButtons = function(){
     cvoc.categories.map(function(category){
-        document.getElementById(category).addEventListener("click", function(e){ console.log('hi'); cvoc.updateCategoryByTime(category)}, false);
+        document.getElementById(category).addEventListener("click", function(e){ cvoc.updateCategoryByTime(category)}, false);
     });
 }
 
@@ -115,7 +165,46 @@ cvoc.chart_totals = new Chart (ctx_totals, {
             mode: 'index'
         },
         legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+                fontSize: 16
+            }
+        },
+    }
+});
+
+cvoc.chart_gender = new Chart (ctx_gender, {
+    type: 'doughnut',
+    data: cvoc.chartByGender(),
+    options: {
+        legend: {
+            position: 'bottom',
+            labels: {
+                fontSize: 16
+            }
+        },
+        title: {
+            display: true,
+            text: 'By Gender',
+            fontSize: 20
+        }
+    }
+});
+
+cvoc.chart_age = new Chart (ctx_age, {
+    type: 'doughnut',
+    data: cvoc.chartByAge(),
+    options: {
+        legend: {
+            position: 'bottom',
+            labels: {
+                fontSize: 16
+            }
+        },
+        title: {
+            display: true,
+            text: 'By Age',
+            fontSize: 20
         }
     }
 });
