@@ -25,7 +25,7 @@ gulp.task('styles', function(){
     return gulp.src('./src/sass/*.scss')
     .pipe(sass())
     .pipe(gulp.dest('./public/css'))
-    .pipe(concat('ocfire.min.css'))
+    .pipe(concat('cvoc.min.css'))
     .pipe(minifyCSS())
     .pipe(gulp.dest('./public/css'))
 });
