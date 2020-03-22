@@ -1,0 +1,13 @@
+/* header */
+#head {
+  background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(../../assets/img/header.jpg) no-repeat center;
+  background-size: cover;
+}
+
+/* change all .btn */
+@media (max-width: 768px) {
+    .btn-group-lg>.btn, .btn-responsive {
+      padding:10px;
+      font-size:80%;
+    }
+}

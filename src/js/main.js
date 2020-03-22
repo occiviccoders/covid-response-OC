@@ -21,7 +21,7 @@ cvoc.getCounts = function(category, type, date){
     }
 }
 
-// parse the count data into chart totals data
+// parse the count data into chartjs format data
 cvoc.chartTotals = function(){
     return cvoc.counts.reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
@@ -138,7 +138,27 @@ cvoc.categoryByTime = function(category){
     });
 }
 
-// load category buttons
+// sets the daily trend
+cvoc.dailyTrend = function(){
+    const trendElement = document.getElementById("trend");
+    const today = cvoc.chart_totals.data.datasets[0].data.slice(-1)[0];
+    const yesterday = cvoc.chart_totals.data.datasets[0].data.slice(-2)[0];
+    const percent = 100*(today-yesterday)/today;
+    let trend = "";
+
+    if(percent<0){
+        trend = "down " + Math.abs(percent.toFixed(0)) + "%";
+        trendElement.style.color = "green";
+    } else {
+        trend = "up " + percent.toFixed(0) + "%";
+        trendElement.style.color = "#d80000";
+    }
+    trendElement.style.textDecoration = "underline";
+    trendElement.style.fontStyle = "italic";
+    trendElement.innerHTML = trend;
+}
+
+// activate category buttons
 cvoc.loadButtons = function(){
     cvoc.categories.map(function(category){
         document.getElementById(category).addEventListener("click", function(e){ cvoc.updateCategoryByTime(category)}, false);
@@ -170,6 +190,7 @@ cvoc.chart_totals = new Chart (ctx_totals, {
                 fontSize: 16
             }
         },
+        aspectRatio: 1.5,
     }
 });
 
@@ -187,7 +208,8 @@ cvoc.chart_gender = new Chart (ctx_gender, {
             display: true,
             text: 'By Gender',
             fontSize: 20
-        }
+        },
+        aspectRatio: 1.2,
     }
 });
 
@@ -205,7 +227,8 @@ cvoc.chart_age = new Chart (ctx_age, {
             display: true,
             text: 'By Age',
             fontSize: 20
-        }
+        },
+        aspectRatio: 1.2,
     }
 });
 
@@ -217,18 +240,18 @@ cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
             mode: 'index'
         },
         legend: {
-            position: 'bottom',
-            labels: {
-                fontSize: 16
-            }
+            display: false,
         },
         title: {
             display: true,
             text: 'Total Cases',
             fontSize: 20
-        }
+        },
+        aspectRatio: 1.5,
     }
 });
 
+// get the daily rates
+cvoc.dailyTrend();
 // load buttons
 cvoc.loadButtons();
