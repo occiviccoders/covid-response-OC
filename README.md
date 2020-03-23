@@ -3,7 +3,10 @@ To help the local community with covid-19. Data provided by [OC Public Health Ca
 
 ## Getting Started
 
-Clone this repo.  Make sure you have NPM, and run `npm install`.
+* Clone this repo.  
+* Make sure you have NPM, and run `npm install`.
+* There is a node file to scrape data from the OC Public Health website, that's currently manually run with `node assets/js/scrapper.js`.  I then copy and paste the data into `assets/js/data.js`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
+
 
 ## Built With
 
