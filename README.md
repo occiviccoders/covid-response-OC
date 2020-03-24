@@ -13,6 +13,7 @@ To help the local community with covid-19. Data provided by [OC Public Health Ca
 * [Bootstrap](https://getbootstrap.com/) - Front end framework
 * [jQuery](https://jquery.com/) - Needs no introduction
 * [chartjs](https://www.chartjs.org/) - Nice charts
+* [chartjs](https://fontawesome.com/) - For the nice icons
 
 ## Authors
 
