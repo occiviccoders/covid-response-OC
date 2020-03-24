@@ -432,6 +432,39 @@ const cvoc = {
         { category: '≥ 65', type: 'Community Acquired**', count: '8' },
         { category: '≥ 65', type: 'Under Investigation', count: '3' } 
       ]
+    },{
+      label: "Mar 23",
+      data: [ { category: 'Total Cases', type: 'Cases', count: '125' },
+      { category: 'Total Cases', type: 'Travel Related', count: '43' },
+      { category: 'Total Cases', type: 'Person to Person Spread*', count: '11' },
+      { category: 'Total Cases', type: 'Community Acquired**', count: '38' },
+      { category: 'Total Cases', type: 'Under Investigation', count: '33' },
+      { category: 'Male', type: 'Cases', count: '73' },
+      { category: 'Male', type: 'Travel Related', count: '21' },
+      { category: 'Male', type: 'Person to Person Spread*', count: '9' },
+      { category: 'Male', type: 'Community Acquired**', count: '21' },
+      { category: 'Male', type: 'Under Investigation', count: '22' },
+      { category: 'Female', type: 'Cases', count: '52' },
+      { category: 'Female', type: 'Travel Related', count: '22' },
+      { category: 'Female', type: 'Person to Person Spread*', count: '2' },
+      { category: 'Female', type: 'Community Acquired**', count: '17' },
+      { category: 'Female', type: 'Under Investigation', count: '11' },
+      { category: '<18', type: 'Cases', count: '1' },
+      { category: '<18', type: 'Community Acquired**', count: '1' },
+      { category: '18 - 49', type: 'Cases', count: '72' },
+      { category: '18 - 49', type: 'Travel Related', count: '27' },
+      { category: '18 - 49', type: 'Person to Person Spread*', count: '8' },
+      { category: '18 - 49', type: 'Community Acquired**', count: '17' },
+      { category: '18 - 49', type: 'Under Investigation', count: '20' },
+      { category: '50 - 64', type: 'Cases', count: '32' },
+      { category: '50 - 64', type: 'Travel Related', count: '12' },
+      { category: '50 - 64', type: 'Person to Person Spread*', count: '3' },
+      { category: '50 - 64', type: 'Community Acquired**', count: '12' },
+      { category: '50 - 64', type: 'Under Investigation', count: '5' },
+      { category: '≥ 65', type: 'Cases', count: '19' },
+      { category: '≥ 65', type: 'Travel Related', count: '4' },
+      { category: '≥ 65', type: 'Community Acquired**', count: '8' },
+      { category: '≥ 65', type: 'Under Investigation', count: '7' } ]
     }
   ]
 }
