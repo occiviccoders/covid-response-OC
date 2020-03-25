@@ -143,7 +143,7 @@ cvoc.dailyTrend = function(){
     const trendElement = document.getElementById("trend");
     const today = cvoc.chart_totals.data.datasets[0].data.slice(-1)[0];
     const yesterday = cvoc.chart_totals.data.datasets[0].data.slice(-2)[0];
-    const percent = 100*(today-yesterday)/today;
+    const percent = 100*(today-yesterday)/yesterday;
     let trend = "";
 
     if(percent<0){
