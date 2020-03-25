@@ -44,9 +44,9 @@ const fetchData = async (url) => {
         label: dateString,
         data: jsonData
     });
-    writeString = "const cvoc = {};\ncvoc.counts = " + JSON.stringify(updateArray, null, 4) + ";\nmodule.exports = cvoc;";
+    writeString = "const cvoc = {};\ncvoc.counts = " + JSON.stringify(updateArray, null, 4) + ";\nif(module){module.exports = cvoc;}";
     // write the data
-    fs.writeFile('Output.js', writeString, (err) => { 
+    fs.writeFile('assets/js/data.js', writeString, (err) => { 
         // In case of a error throw err. 
         if (err) throw err; 
     })
