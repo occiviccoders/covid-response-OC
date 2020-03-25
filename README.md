@@ -5,15 +5,22 @@ To help the local community with covid-19. Data provided by [OC Public Health Ca
 
 * Clone this repo.  
 * Make sure you have NPM, and run `npm install`.
-* There is a node file to scrape data from the OC Public Health website, that's currently manually run with `node assets/js/scrapper.js`.  I then copy and paste the data into `assets/js/data.js`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
+* There is a node file to scrape data from the OC Public Health website, that's currently manually run with the `node run scrape` command.  This copies data into `assets/js/data.js`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
 
 
 ## Built With
 
+### Front End
 * [Bootstrap](https://getbootstrap.com/) - Front end framework
 * [jQuery](https://jquery.com/) - Needs no introduction
 * [chartjs](https://www.chartjs.org/) - Nice charts
-* [chartjs](https://fontawesome.com/) - For the nice icons
+* [fontawesome](https://fontawesome.com/) - For the nice icons
+
+## Back End
+The backend has no real server.  Just me running scripts and pushing for now.
+* [Nodejs](https://nodejs.org/en/) - For scraping and running scripts
+* [Babel](https://babeljs.io/) - For compiling ES6 in node so that I can push/pull data from `assets/js/data.js`
+* [gulp](https://gulpjs.com/) - To minify and publish JS/CSS from the `src` folder to `public` folder.
 
 ## Authors
 

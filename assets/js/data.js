@@ -468,3 +468,5 @@ const cvoc = {
     }
   ]
 }
+// export for scapper
+module.exports = cvoc;
