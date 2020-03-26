@@ -61,7 +61,7 @@ cvoc.chartByGender = function(){
         labels:['Male', 'Female'],
         datasets: [{
             data: data,
-            backgroundColor: ['rgba(187, 26, 163, 0.4)','rgba(63, 127, 191, 0.6)']
+            backgroundColor: ['rgba(63, 127, 191, 0.6)','rgba(187, 26, 163, 0.4)']
         }],
     }
 }
