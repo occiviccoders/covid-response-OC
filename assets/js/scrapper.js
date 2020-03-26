@@ -5,7 +5,7 @@ const fs = require('fs');
 const cvoc= require('./data.js');
 
 // scrape for the covid counts
-const OCUrl = "https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus";
+const OCUrl = "https://occovid19.ochealthinfo.com/coronavirus-in-oc";
 const fetchData = async (url) => {
     const today = new Date(); 
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

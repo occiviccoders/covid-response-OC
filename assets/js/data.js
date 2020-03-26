@@ -2164,6 +2164,186 @@ cvoc.counts = [
                 "count": "6"
             }
         ]
+    },
+    {
+        "label": "Mar 25",
+        "data": [
+            {
+                "category": "Total Cases",
+                "type": "Cases",
+                "count": "187"
+            },
+            {
+                "category": "Total Cases",
+                "type": "Deaths",
+                "count": "1"
+            },
+            {
+                "category": "Total Cases",
+                "type": "Travel Related",
+                "count": "62"
+            },
+            {
+                "category": "Total Cases",
+                "type": "Person to Person Spread*",
+                "count": "17"
+            },
+            {
+                "category": "Total Cases",
+                "type": "Community Acquired**",
+                "count": "57"
+            },
+            {
+                "category": "Total Cases",
+                "type": "Under Investigation",
+                "count": "51"
+            },
+            {
+                "category": "Male",
+                "type": "Cases",
+                "count": "117"
+            },
+            {
+                "category": "Male",
+                "type": "Deaths",
+                "count": "1"
+            },
+            {
+                "category": "Male",
+                "type": "Travel Related",
+                "count": "32"
+            },
+            {
+                "category": "Male",
+                "type": "Person to Person Spread*",
+                "count": "12"
+            },
+            {
+                "category": "Male",
+                "type": "Community Acquired**",
+                "count": "36"
+            },
+            {
+                "category": "Male",
+                "type": "Under Investigation",
+                "count": "37"
+            },
+            {
+                "category": "Female",
+                "type": "Cases",
+                "count": "70"
+            },
+            {
+                "category": "Female",
+                "type": "Travel Related",
+                "count": "30"
+            },
+            {
+                "category": "Female",
+                "type": "Person to Person Spread*",
+                "count": "5"
+            },
+            {
+                "category": "Female",
+                "type": "Community Acquired**",
+                "count": "21"
+            },
+            {
+                "category": "Female",
+                "type": "Under Investigation",
+                "count": "14"
+            },
+            {
+                "category": "<18",
+                "type": "Cases",
+                "count": "1"
+            },
+            {
+                "category": "<18",
+                "type": "Community Acquired**",
+                "count": "1"
+            },
+            {
+                "category": "18 - 49",
+                "type": "Cases",
+                "count": "101"
+            },
+            {
+                "category": "18 - 49",
+                "type": "Travel Related",
+                "count": "35"
+            },
+            {
+                "category": "18 - 49",
+                "type": "Person to Person Spread*",
+                "count": "11"
+            },
+            {
+                "category": "18 - 49",
+                "type": "Community Acquired**",
+                "count": "27"
+            },
+            {
+                "category": "18 - 49",
+                "type": "Under Investigation",
+                "count": "28"
+            },
+            {
+                "category": "50 - 64",
+                "type": "Cases",
+                "count": "54"
+            },
+            {
+                "category": "50 - 64",
+                "type": "Travel Related",
+                "count": "16"
+            },
+            {
+                "category": "50 - 64",
+                "type": "Person to Person Spread*",
+                "count": "5"
+            },
+            {
+                "category": "50 - 64",
+                "type": "Community Acquired**",
+                "count": "18"
+            },
+            {
+                "category": "50 - 64",
+                "type": "Under Investigation",
+                "count": "15"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Cases",
+                "count": "31"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Deaths",
+                "count": "1"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Travel Related",
+                "count": "11"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Person to Person Spread*",
+                "count": "1"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Community Acquired**",
+                "count": "11"
+            },
+            {
+                "category": "≥ 65",
+                "type": "Under Investigation",
+                "count": "8"
+            }
+        ]
     }
 ];
 if(module){module.exports = cvoc;}
