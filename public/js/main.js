@@ -145,7 +145,6 @@ cvoc.dailyTrend = function(){
     const yesterday = cvoc.chart_totals.data.datasets[0].data.slice(-2)[0];
     const percent = 100*(today-yesterday)/yesterday;
     let trend = "";
-
     if(percent<0){
         trend = "down " + Math.abs(percent.toFixed(0)) + "%";
         trendElement.style.color = "green";
