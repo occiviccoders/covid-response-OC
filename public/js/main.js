@@ -36,7 +36,7 @@ cvoc.chartTotals = function(){
             backgroundColor: 'rgba(198, 91, 16, 0.5)',
             borderColor: 'rgba(198, 91, 16, 1)',
         },{
-            label:  'Dealths',
+            label:  'Deaths',
             data: [],
             backgroundColor: 'rgb(155, 155, 155, 0.3)',
             borderColor: 'rgb(155, 155, 155, 1)',
