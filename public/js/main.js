@@ -26,7 +26,7 @@ cvoc.chartTotals = function(){
     return cvoc.counts.reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
         returnArray.datasets[0].data.push(cvoc.getCounts("Total Cases", "Cases", date));
-        returnArray.datasets[1].data.push(cvoc.getCounts("Total Cases", "Total Deaths", date));
+        returnArray.datasets[1].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
         return returnArray;
     },{
         labels:[],
@@ -36,7 +36,7 @@ cvoc.chartTotals = function(){
             backgroundColor: 'rgba(198, 91, 16, 0.5)',
             borderColor: 'rgba(198, 91, 16, 1)',
         },{
-            label:  'Total Dealths',
+            label:  'Dealths',
             data: [],
             backgroundColor: 'rgb(155, 155, 155, 0.3)',
             borderColor: 'rgb(155, 155, 155, 1)',

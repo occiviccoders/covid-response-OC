@@ -1995,7 +1995,7 @@ cvoc.counts = [
             },
             {
                 "category": "Total Cases",
-                "type": "Total Deaths",
+                "type": "Deaths",
                 "count": "1"
             },
             {
