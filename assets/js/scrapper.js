@@ -2,7 +2,7 @@
 const axios = require("axios");
 const cheerio = require('cheerio'), cheerioTableparser = require('cheerio-tableparser');
 const fs = require('fs');
-const cvoc= require('./data.js');
+const cvoc= require('./db.js');
 
 // scrape for the covid counts
 const OCUrl = "https://occovid19.ochealthinfo.com/coronavirus-in-oc";
@@ -21,8 +21,8 @@ const fetchData = async (url) => {
     cheerioTableparser($);
     // fetch and parse the data
     let text = $('table').filter(function (i, element) {
-        let has = $(this).text().indexOf("COVID-19 Case Counts");
-        let not = $(this).text().indexOf("Call Ahead");
+        let has = $(this).text().indexOf("2020 Orange County Coronavirus Case Counts");
+        let not = $(this).text().indexOf("Case Counts by Cities");
         if(has>-1 && not<0){
             return $(this);
         }
@@ -44,9 +44,17 @@ const fetchData = async (url) => {
         label: dateString,
         data: jsonData
     });
-    writeString = "const cvoc = {};\ncvoc.counts = " + JSON.stringify(updateArray, null, 4) + ";\nif(module){module.exports = cvoc;}";
+    // write the frontend data
+    writeString = "const cvoc = {};\ncvoc.counts = " + JSON.stringify(updateArray, null, 4) + ";\n";
     // write the data
     fs.writeFile('assets/js/data.js', writeString, (err) => { 
+        // In case of a error throw err. 
+        if (err) throw err; 
+    }) 
+    // write the db reader for node scraping
+    writeString += "module.exports = cvoc;";
+    // write the data
+    fs.writeFile('assets/js/db.js', writeString, (err) => { 
         // In case of a error throw err. 
         if (err) throw err; 
     })

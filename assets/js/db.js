@@ -2581,3 +2581,4 @@ cvoc.counts = [
         ]
     }
 ];
+module.exports = cvoc;

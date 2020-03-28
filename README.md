@@ -1,5 +1,7 @@
 # covid-response-OC
-To help the local community with covid-19. Data provided by [OC Public Health Care Agency](https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus).  
+The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-OC/) was made to help the local community with covid-19. Data provided by [OC Public Health Care Agency](https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus).  
+
+
 
 ## Getting Started
 

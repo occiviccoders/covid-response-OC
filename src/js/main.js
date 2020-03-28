@@ -33,7 +33,7 @@ cvoc.chartTotals = function(){
         datasets: [{
             label:  'Total Cases',
             data: [],
-            backgroundColor: 'rgba(198, 91, 16, 0.5)',
+            backgroundColor: 'rgba(198, 91, 16, 0.6)',
             borderColor: 'rgba(198, 91, 16, 1)',
         },{
             label:  'Deaths',
@@ -61,7 +61,7 @@ cvoc.chartByGender = function(){
         labels:['Male', 'Female'],
         datasets: [{
             data: data,
-            backgroundColor: ['rgba(63, 127, 191, 0.6)','rgba(187, 26, 163, 0.4)']
+            backgroundColor: ['rgb(63, 127, 191, 0.6)','rgba(187, 26, 163, 0.6)']
         }],
     }
 }
@@ -69,39 +69,49 @@ cvoc.chartByGender = function(){
 // parse the count data by age
 cvoc.chartByAge = function(){
     const last = cvoc.counts.slice(-1)[0];
+    console.log(last)
     const data = last.data.reduce(function(returnArray, datum){
         if (datum.category==='<18' && datum.type==='Cases'){
             returnArray[0] += Number(datum.count);
         }
-        if (datum.category==='18 - 49' && datum.type==='Cases'){
+        if (datum.category==='18 - 24' && datum.type==='Cases'){
             returnArray[1] += Number(datum.count);
         }
-        if (datum.category==='50 - 64' && datum.type==='Cases'){
+        if (datum.category==='25 - 34' && datum.type==='Cases'){
             returnArray[2] += Number(datum.count);
         }
-        if (datum.category==='≥ 65' && datum.type==='Cases'){
+        if (datum.category==='35 - 44' && datum.type==='Cases'){
             returnArray[3] += Number(datum.count);
         }
+        if (datum.category==='45 - 64' && datum.type==='Cases'){
+            returnArray[4] += Number(datum.count);
+        }
+        if (datum.category==='≥ 65' && datum.type==='Cases'){
+            returnArray[5] += Number(datum.count);
+        }
         return returnArray;
-    },[0, 0, 0, 0])
+    },[0, 0, 0, 0, 0, 0])
     return {
-        labels:['Under 18', '18 to 49', '50 to 64', '65 and Over'],
+        labels:['Under 18', '18 to 24', '25 to 34', '35 to 44', '45 to 64', '65 and Over'],
         datasets: [{
             data: data,
-            backgroundColor: ['rgba(37, 80, 222, 1)','rgba(37, 80, 222, 0.8)','rgba(37, 80, 222, 0.6)','rgba(37, 80, 222, 0.4)']
+            backgroundColor: ["#250902","#376E3F", "#F2D396","#DBB164","#FF9A17","#C6601B"]
         }],
     }
 }
 
 // parse the count data into chart categories data
 cvoc.categoryByTime = function(category){
-    return cvoc.counts.reduce(function(returnArray, date){
-        returnArray.labels.push(date.label);
-        returnArray.datasets[0].data.push(cvoc.getCounts(category, "Travel Related", date));
-        returnArray.datasets[1].data.push(cvoc.getCounts(category, "Person to Person Spread*", date));
-        returnArray.datasets[2].data.push(cvoc.getCounts(category, "Community Acquired**", date));
-        returnArray.datasets[3].data.push(cvoc.getCounts(category, "Under Investigation", date));
-        returnArray.datasets[4].data.push(cvoc.getCounts("Total Cases", "Cases", date));
+    return cvoc.counts.reduce(function(returnArray, date, index){
+        // oc stopped catagorizing after mar 26 (21 data points)
+        if(index<21){
+            returnArray.labels.push(date.label);
+            returnArray.datasets[0].data.push(cvoc.getCounts(category, "Travel Related", date));
+            returnArray.datasets[1].data.push(cvoc.getCounts(category, "Person to Person Spread*", date));
+            returnArray.datasets[2].data.push(cvoc.getCounts(category, "Community Acquired**", date));
+            returnArray.datasets[3].data.push(cvoc.getCounts(category, "Under Investigation", date));
+            returnArray.datasets[4].data.push(cvoc.getCounts("Total Cases", "Cases", date));            
+        }
         return returnArray;
     },{
         labels:[],
