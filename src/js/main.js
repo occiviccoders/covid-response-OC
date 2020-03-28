@@ -1,3 +1,6 @@
+// set the mapbox token
+mapboxgl.accessToken = "pk.eyJ1IjoiaW5pdGlhbGFwcHMiLCJhIjoiY2pzMnBzZGZnMDM0azQ5bDdyOHdraHV1ZyJ9.JdYkI5UwxhJgJOkbm2_8rw";
+
 // note data are from data.js... Im not proud of that, but was quick to hack together
 // use cvoc for data object
 // charts
@@ -69,7 +72,6 @@ cvoc.chartByGender = function(){
 // parse the count data by age
 cvoc.chartByAge = function(){
     const last = cvoc.counts.slice(-1)[0];
-    console.log(last)
     const data = last.data.reduce(function(returnArray, datum){
         if (datum.category==='<18' && datum.type==='Cases'){
             returnArray[0] += Number(datum.count);
@@ -97,6 +99,38 @@ cvoc.chartByAge = function(){
             data: data,
             backgroundColor: ["#250902","#376E3F", "#F2D396","#DBB164","#FF9A17","#C6601B"]
         }],
+    }
+}
+
+// parse the data into geoJson
+cvoc.geoJson = function(){
+    const last = cvoc.counts.slice(-1)[0];
+    return {
+        "type": "FeatureCollection",
+        "features": cvoc.cities.map(function(city){
+            // get individual city data
+            let cityData = last.location.find(function(datum){
+                return datum.city === city.city && city.city!=='All';
+            })
+            // get all city data
+            if(!cityData && city.city === "All"){
+                cityData = {
+                    city: "All",
+                    population: last.location.find(function(datum){ return datum.city === "Total Population" }).population,
+                    cases: last.location.find(function(datum){ return datum.city === "Total Cases" }).cases,
+                }
+            }
+            cityData.population = Number(cityData.population);
+            cityData.cases = Number(cityData.cases);
+            return {
+                "type": "Feature",
+                "properties": cityData,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": city.location,
+                }
+            }
+        })
     }
 }
 
@@ -259,6 +293,50 @@ cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
         aspectRatio: 1.5,
     }
 });
+
+// load the map
+cvoc.map = new mapboxgl.Map({
+    container: "map",
+    style: 'mapbox://styles/mapbox/light-v9',
+    center: cvoc.cities[0].location,
+    zoom: 9,
+})
+cvoc.map.on('load', function(){
+    // define the map popup
+    let popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+    })
+    // parse the city data to json
+    let data = cvoc.geoJson();
+    // fitler out the 'all' city
+    data.features = data.features.filter(function(feature){
+        return feature.properties.city !== 'All';
+    })
+    // add the city source data
+    cvoc.map.addSource('cityLayer', {
+        type: 'geojson',
+        data: data,
+    })
+    cvoc.map.addLayer({
+        'id': 'city',
+        'type': 'circle',
+        'source': 'cityLayer',
+        'paint': {
+            'circle-radius': ['number', ['get', 'cases']],
+            'circle-color': '#e55e5e',
+            'circle-opacity': 0.6,
+        }
+    })
+    // create the map popup
+    cvoc.map.on('mouseenter', 'city', function(element){
+        let description = "<b>Total Cases: " + element.features[0].properties.cases + "</b>";
+        let coordinates = element.features[0].geometry.coordinates.slice();
+        // change cursor to pointer
+        cvoc.map.getCanvas().style.cursor = 'pointer';
+        popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
+    })
+})
 
 // get the daily rates
 cvoc.dailyTrend();

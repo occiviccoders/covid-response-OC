@@ -6,6 +6,7 @@
         <title>OC Corona Virus (Covid-19) Community Watch</title>
         <link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" href="vendors/fontawesome-free/css/all.min.css">
         <link href='./public/css/cvoc.min.css' rel='stylesheet' />
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -68,7 +69,18 @@
                 </div>
             </div>
         </div>
-
+        <div class="container py-5 mb-5">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class="my-4">Where is Corona Virus occuring most in Orange County?</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
         <div class="container py-5 mb-5">
             <div class="row text-center">
                 <div class="col">
@@ -120,6 +132,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script src="./vendors/fontawesome-free/js/all.min.js"></script>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
         <script src='./assets/js/data.js'></script>
         <script src='./public/js/main.js'></script>
     </body>

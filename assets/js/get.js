@@ -12,40 +12,40 @@ const fetchData = async (url) => {
     const dateString = months[today.getMonth()] + ' ' + today.getDate();
     const result = await axios.get(url);
     const $ = cheerio.load(result.data);
+    let newCvoc = { cities: cvoc.cities };
     let jsonData = [];
     let writeString = "";
     // prep the current data to remove todays date
-    let updateArray = cvoc.counts.filter(function(datum){
+    newCvoc.counts = cvoc.counts.filter(function(datum){
         return datum.label !== dateString;
     });
     cheerioTableparser($);
     // fetch and parse the data
     let text = $('table').filter(function (i, element) {
-        let has = $(this).text().indexOf("2020 Orange County Coronavirus Case Counts");
-        let not = $(this).text().indexOf("Case Counts by Cities");
+        let not = $(this).text().indexOf("2020 Orange County Coronavirus Case Counts");
+        let has = $(this).text().indexOf("POPULATION*");
         if(has>-1 && not<0){
             return $(this);
         }
     }).parsetable(false, false, true);
-    // jsonify data    
-    for (let x = 1; x < 8; x++) {
-        for (let y = 3; y < 9; y++) {
-            if(Number(text[x][y])){
-                jsonData.push({
-                    category:text[x][2],
-                    type:text[0][y],
-                    count: text[x][y],
-                })
-            }
-        }
+
+    // jsonify data   
+    for (let y = 1; y < text[0].length; y++) { 
+        jsonData.push({
+            city:text[0][y],
+            population:text[1][y],
+            cases: text[2][y],
+        })
     }
+
     // add the latest data
-    updateArray.push({
+    newCvoc.counts.push({
         label: dateString,
-        data: jsonData
+        data: [],
+        location: jsonData
     });
     // write the frontend data
-    writeString = "const cvoc = {};\ncvoc.counts = " + JSON.stringify(updateArray, null, 4) + ";\n";
+    writeString = "const cvoc = " + JSON.stringify(newCvoc, null, 4) + ";\n";
     // write the data
     fs.writeFile('assets/js/data.js', writeString, (err) => { 
         // In case of a error throw err. 

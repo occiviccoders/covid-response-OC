@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.9.0"
   },
   "scripts": {
-    "scrape": "npx babel-node assets/js/scrapper.js",
+    "get": "npx babel-node assets/js/get.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
