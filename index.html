@@ -73,11 +73,28 @@
             <div class="row text-center">
                 <div class="col">
                     <h2 class="my-4">Where is Corona Virus occuring most in Orange County?</h2>
+                    <div class="row justify-content-md-center">
+                        <div class="col col-lg-6 col-md-9">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Displayed By: </label>
+                                </div>
+                                <select class="custom-select" id="map-select">
+                                    <option value="Total Cases" selected>Total Cases</option>
+                                    <option value="Cases Per 100,000 People">Cases Per 100,000 People</option>
+                                </select>
+                            </div>                                
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <div id="map"></div>
+                <div class="col-md-9">
+                    <div id="cvoc-map"></div>
+                </div>
+                <div class="col-md-3">
+                    <div id="cvoc-map-sidebar"></div>
                 </div>
             </div>
         </div>

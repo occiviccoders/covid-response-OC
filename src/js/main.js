@@ -112,8 +112,10 @@ cvoc.geoJson = function(){
             let cityData = last.location.find(function(datum){
                 return datum.city === city.city;
             })
-            cityData.population = Number(cityData.population);
+            cityData.population = Number(cityData.population.replace(",", ""));
             cityData.cases = Number(cityData.cases);
+            cityData.normalized = cityData.cases/cityData.population;
+            cityData.displayed = cityData.cases; // a dynamic display variable
             return {
                 "type": "Feature",
                 "properties": cityData,
@@ -288,62 +290,176 @@ cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
 
 // load the map
 cvoc.map = new mapboxgl.Map({
-    container: "map",
+    container: "cvoc-map",
     style: 'mapbox://styles/mapbox/light-v9',
     center: cvoc.cities[0].location,
     zoom: 9,
 })
+
 cvoc.map.on('load', function(){
-    // define the map popup
-    let popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false,
-        className: 'cvoc-popup',
-        maxWidth: '600px'
-    })
+
     // parse the city data to json
     let data = cvoc.geoJson();
     // fitler out the 'Total' city
     data.features = data.features.filter(function(feature){
         return feature.properties.city !== 'Total';
     })
+
+    // initialize the display value
+    cvoc.displayed = 'Total Cases';
+
+    // define the map popup
+    cvoc.popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        className: 'cvoc-popup',
+        maxWidth: '600px'
+    })
+
     // add the city source data
     cvoc.map.addSource('cityLayer', {
         type: 'geojson',
         data: data,
+        generateId: true,
     })
+
+    // set the layer and styling
     cvoc.map.addLayer({
         'id': 'city',
         'type': 'circle',
         'source': 'cityLayer',
         'paint': {
-            'circle-radius': ['number', ['get', 'cases']],
-            'circle-color': '#e55e5e',
-            'circle-opacity': 0.6,
+            'circle-radius': [
+                'case',
+                [
+                    'boolean',
+                    ['feature-state', 'hover'],
+                    false
+                ],
+                ['*', 1.25, ['number', ['get', 'displayed']]],
+                ['number', ['get', 'displayed']],
+            ],
+            'circle-color': [
+                'case',
+                [
+                    'boolean',
+                    ['feature-state', 'hover'],
+                    false
+                ],
+                '#FF4C4C',
+                '#e55e5e',
+            ],
+            'circle-opacity': [
+                'case',
+                [
+                    'boolean',
+                    ['feature-state', 'hover'],
+                    false
+                ],
+                0.7,
+                0.6,
+            ],
         }
     })
-    /*                ['boolean',
-                  ['feature-state', 'hover'],
-                  false
-                ],
-                0.8,
-                0.6,
-                */
-    // create the map popup
+
+    // show the map popup
     cvoc.map.on('mouseenter', 'city', function(element){
         const city = element.features[0].properties.city;
-        const description = '<div class="row"><div class="col text-center"><h2><b>' + element.features[0].properties.cases + '</b></h2></div><div class="col popup-description">Total Cases<br><strong>' + city + "</strong></div></div>";
+        const description = '<div class="row"><div class="col text-center"><h2><b>' + element.features[0].properties.displayed + '</b></h2></div><div class="col popup-description">' + cvoc.displayed  + '<br><strong>' + city + "</strong></div></div>";
         const coordinates = element.features[0].geometry.coordinates.slice();
         // change cursor to pointer
         cvoc.map.getCanvas().style.cursor = 'pointer';
-        popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
-        /*map.setFeatureState({
-            source: 'cityLayer',
-            city: city,
-        }, {
-            hover: true
-        });*/
+        cvoc.popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
     })
+
+    // for touch devices
+    cvoc.map.on('touchstart', 'city', function(element){
+        const city = element.features[0].properties.city;
+        const description = '<div class="row"><div class="col text-center"><h2><b>' + element.features[0].properties.displayed + '</b></h2></div><div class="col popup-description">' + cvoc.displayed  + '<br><strong>' + city + "</strong></div></div>";
+        const coordinates = element.features[0].geometry.coordinates.slice();
+        cvoc.popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
+    })
+
+    // dynamic bubble style
+    cvoc.map.on('mousemove', 'city', function(element) {
+        if (element.features.length > 0) {
+            if (cvoc.hover) {
+                // set the hover attribute to false with feature state
+                cvoc.map.setFeatureState({
+                    source: 'cityLayer',
+                    id: cvoc.hover
+                }, {
+                    hover: false
+                });
+            }
+            cvoc.hover = element.features[0].id;
+            // set the hover attribute to true with feature state
+            cvoc.map.setFeatureState({
+                source: 'cityLayer',
+                id: cvoc.hover
+            }, {
+                hover: true
+            });
+        }
+    });
+
+    // for touch devices
+    cvoc.map.on('touchemove', 'city', function(element) {
+        if (element.features.length > 0) {
+            if (cvoc.hover) {
+                // set the hover attribute to false with feature state
+                cvoc.map.setFeatureState({
+                    source: 'cityLayer',
+                    id: cvoc.hover
+                }, {
+                    hover: false
+                });
+            }
+            cvoc.hover = element.features[0].id;
+            // set the hover attribute to true with feature state
+            cvoc.map.setFeatureState({
+                source: 'cityLayer',
+                id: cvoc.hover
+            }, {
+                hover: true
+            });
+        }
+    });
+
+    cvoc.loadSelect = function() {
+        // load the map select button
+        document.getElementById('map-select').addEventListener('change', function() {
+            cvoc.displayed = this.value;
+            cvoc.popup.remove(); // clear popup
+            // re parse the geodata
+            data.features = data.features.map(function(city){
+                if(cvoc.displayed === 'Total Cases'){
+                    city.properties.displayed = city.properties.cases;         
+                } else {
+                    city.properties.displayed = Math.round(city.properties.normalized * 100000);
+                }
+                return city;
+            });
+            cvoc.updateMap(data);
+        });        
+    }
+
+    // function to update the map
+    cvoc.updateMap = function(data) {
+        cvoc.map.getSource('cityLayer').setData(data);
+    }
+
+    cvoc.loadSidebar = function () {
+        const sidebar = document.getElementById('cvoc-map-sidebar');
+        
+        //const cities = 
+    }
+
+    // load the buttons
+    cvoc.loadSelect();
+
+
+
 })
 
 // get the daily rates
