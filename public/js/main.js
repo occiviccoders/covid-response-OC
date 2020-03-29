@@ -107,7 +107,7 @@ cvoc.geoJson = function(){
     const last = cvoc.counts.slice(-1)[0];
     return {
         "type": "FeatureCollection",
-        "features": cvoc.cities.map(function(city){
+        "features": cvoc.cities.map(function(city, index){
             // get individual city data
             let cityData = last.location.find(function(datum){
                 return datum.city === city.city;
@@ -118,6 +118,7 @@ cvoc.geoJson = function(){
             cityData.displayed = cityData.cases; // a dynamic display variable
             return {
                 "type": "Feature",
+                "id": index,
                 "properties": cityData,
                 "geometry": {
                     "type": "Point",
@@ -320,7 +321,6 @@ cvoc.map.on('load', function(){
     cvoc.map.addSource('cityLayer', {
         type: 'geojson',
         data: data,
-        generateId: true,
     })
 
     // set the layer and styling
@@ -426,6 +426,11 @@ cvoc.map.on('load', function(){
         }
     });
 
+    cvoc.map.on('mouseleave', 'city', function() {
+        cvoc.map.getCanvas().style.cursor = '';
+        cvoc.popup.remove();
+    });
+
     cvoc.loadSelect = function() {
         // load the map select button
         document.getElementById('map-select').addEventListener('change', function() {
@@ -441,6 +446,7 @@ cvoc.map.on('load', function(){
                 return city;
             });
             cvoc.updateMap(data);
+            cvoc.updateSidebar(data);
         });        
     }
 
@@ -449,16 +455,67 @@ cvoc.map.on('load', function(){
         cvoc.map.getSource('cityLayer').setData(data);
     }
 
+    // function to update the sidebar 
+    cvoc.updateSidebar = function(){
+        const sidebar = d3.select('#cvoc-map-sidebar');
+        const maxDisplayed = Math.max.apply(Math, data.features.map(function(city) { return city.properties.displayed; }))
+        // update the sidebar
+        sidebar.selectAll("div.map-sidebar-row")
+        .sort(function(a, b){
+            return d3.descending(a.properties.displayed, b.properties.displayed);
+        })
+        .html(function(d,i){
+            return d.properties.city + ' (' + d.properties.displayed + ')';
+        })
+        .transition().duration(500)
+        .style("top", function(d, i) {
+            return ((i*26)) + "px";
+        })
+        .style("background", function(d,i){
+            const percent = (100*(d.properties.displayed/maxDisplayed)).toFixed();
+            return "-webkit-linear-gradient(left, #DDDDDD, #DDDDDD " + percent + "%, transparent " + percent + "%, transparent 100%)"
+        })
+    }
+    
+    // function to load the sidebar
     cvoc.loadSidebar = function () {
-        const sidebar = document.getElementById('cvoc-map-sidebar');
-        
-        //const cities = 
+        const sidebar = d3.select('#cvoc-map-sidebar');
+        sidebar.selectAll("div.map-sidebar-row")
+        .data(data.features)
+        .enter()
+        .append('div')
+        .attr("class", "map-sidebar-row-wrap")
+        .append('div')
+        .attr("class", "map-sidebar-row")
+        .html(function(d,i){
+            return d.properties.city + ' (' + d.properties.displayed + ')';
+        }).on("mouseover", function(element){
+            const city = element.properties.city;
+            const description = '<div class="row"><div class="col text-center"><h2><b>' + element.properties.displayed + '</b></h2></div><div class="col popup-description">' + cvoc.displayed  + '<br><strong>' + city + "</strong></div></div>";
+            const coordinates = element.geometry.coordinates.slice();
+            cvoc.popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
+            cvoc.map.setFeatureState({
+                source: 'cityLayer',
+                id: element.id
+            }, {
+                hover: true
+            });
+        }).on("mouseleave", function(element){
+            cvoc.popup.remove();
+            cvoc.map.setFeatureState({
+                source: 'cityLayer',
+                id: element.id
+            }, {
+                hover: false
+            });
+        });
+        // sort by descending
+        cvoc.updateSidebar();
     }
 
     // load the buttons
     cvoc.loadSelect();
-
-
+    cvoc.loadSidebar();
 
 })
 

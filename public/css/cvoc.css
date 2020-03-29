@@ -57,6 +57,17 @@
 .cvoc-popup .mapboxgl-popup-content strong {
   font-size: larger; }
 
+#cvoc-map-sidebar {
+  height: 730px; }
+
+.map-sidebar-row-wrap {
+  position: relative;
+  width: 100%; }
+
+.map-sidebar-row {
+  position: absolute;
+  width: 100%; }
+
 footer {
   display: inline-block;
   width: 100%;
