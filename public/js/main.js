@@ -110,16 +110,8 @@ cvoc.geoJson = function(){
         "features": cvoc.cities.map(function(city){
             // get individual city data
             let cityData = last.location.find(function(datum){
-                return datum.city === city.city && city.city!=='All';
+                return datum.city === city.city;
             })
-            // get all city data
-            if(!cityData && city.city === "All"){
-                cityData = {
-                    city: "All",
-                    population: last.location.find(function(datum){ return datum.city === "Total Population" }).population,
-                    cases: last.location.find(function(datum){ return datum.city === "Total Cases" }).cases,
-                }
-            }
             cityData.population = Number(cityData.population);
             cityData.cases = Number(cityData.cases);
             return {
@@ -311,9 +303,9 @@ cvoc.map.on('load', function(){
     })
     // parse the city data to json
     let data = cvoc.geoJson();
-    // fitler out the 'all' city
+    // fitler out the 'Total' city
     data.features = data.features.filter(function(feature){
-        return feature.properties.city !== 'All';
+        return feature.properties.city !== 'Total';
     })
     // add the city source data
     cvoc.map.addSource('cityLayer', {

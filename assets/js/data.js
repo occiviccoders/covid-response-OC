@@ -1,7 +1,7 @@
 const cvoc = {
     "cities": [
         {
-            "city": "All",
+            "city": "Total",
             "location": [
                 -117.8311,
                 33.7175
@@ -2952,5 +2952,217 @@ const cvoc = {
                 }
             ]
         },
+        {
+            "label": "Mar 28",
+            "data": [
+                {
+                    "category": "Total Cases",
+                    "type": "Cases",
+                    "count": "403"
+                },
+                {
+                    "category": "Total Cases",
+                    "type": "Deaths",
+                    "count": "4"
+                },
+                {
+                    "category": "Male",
+                    "type": "Cases",
+                    "count": "232"
+                },
+                {
+                    "category": "Female",
+                    "type": "Cases",
+                    "count": "170"
+                },
+                {
+                    "category": "<18",
+                    "type": "Cases",
+                    "count": "2"
+                },
+                {
+                    "category": "18 - 24",
+                    "type": "Cases",
+                    "count": "42"
+                },
+                {
+                    "category": "25 - 34",
+                    "type": "Cases",
+                    "count": "70"
+                },
+                {
+                    "category": "35 - 44",
+                    "type": "Cases",
+                    "count": "66"
+                },
+                {
+                    "category": "45 - 64",
+                    "type": "Cases",
+                    "count": "150"
+                },
+                {
+                    "category": "≥ 65",
+                    "type": "Cases",
+                    "count": "71"
+                }
+            ],
+            "location": [
+                {
+                    "city": "Aliso Viejo",
+                    "population": "51,372",
+                    "cases": "3"
+                },
+                {
+                    "city": "Anaheim",
+                    "population": "359,339",
+                    "cases": "37"
+                },
+                {
+                    "city": "Brea",
+                    "population": "45,606",
+                    "cases": "3"
+                },
+                {
+                    "city": "Buena Park",
+                    "population": "83,384",
+                    "cases": "12"
+                },
+                {
+                    "city": "Costa Mesa",
+                    "population": "115,830",
+                    "cases": "9"
+                },
+                {
+                    "city": "Cypress",
+                    "population": "49,833",
+                    "cases": "7"
+                },
+                {
+                    "city": "Dana Point",
+                    "population": "34,249",
+                    "cases": "6"
+                },
+                {
+                    "city": "Fountain Valley",
+                    "population": "56,652",
+                    "cases": "6"
+                },
+                {
+                    "city": "Fullerton",
+                    "population": "142,824",
+                    "cases": "8"
+                },
+                {
+                    "city": "Garden Grove",
+                    "population": "175,155",
+                    "cases": "7"
+                },
+                {
+                    "city": "Huntington Beach",
+                    "population": "203,761",
+                    "cases": "32"
+                },
+                {
+                    "city": "Irvine",
+                    "population": "280,202",
+                    "cases": "36"
+                },
+                {
+                    "city": "La Habra",
+                    "population": "63,542",
+                    "cases": "2"
+                },
+                {
+                    "city": "Laguna Niguel",
+                    "population": "66,748",
+                    "cases": "13"
+                },
+                {
+                    "city": "Lake Forest",
+                    "population": "86,346",
+                    "cases": "7"
+                },
+                {
+                    "city": "Mission Viejo",
+                    "population": "96,434",
+                    "cases": "7"
+                },
+                {
+                    "city": "Newport Beach",
+                    "population": "87,180",
+                    "cases": "36"
+                },
+                {
+                    "city": "Orange",
+                    "population": "141,691",
+                    "cases": "11"
+                },
+                {
+                    "city": "Placentia",
+                    "population": "52,333",
+                    "cases": "6"
+                },
+                {
+                    "city": "Rancho Santa Margarita",
+                    "population": "48,960",
+                    "cases": "4"
+                },
+                {
+                    "city": "San Clemente",
+                    "population": "65,405",
+                    "cases": "11"
+                },
+                {
+                    "city": "San Juan Capistrano",
+                    "population": "36,821",
+                    "cases": "9"
+                },
+                {
+                    "city": "Santa Ana",
+                    "population": "337,716",
+                    "cases": "20"
+                },
+                {
+                    "city": "Seal Beach",
+                    "population": "25,073",
+                    "cases": "1"
+                },
+                {
+                    "city": "Stanton",
+                    "population": "39,307",
+                    "cases": "1"
+                },
+                {
+                    "city": "Tustin",
+                    "population": "81,369",
+                    "cases": "7"
+                },
+                {
+                    "city": "Westminster",
+                    "population": "92,610",
+                    "cases": "5"
+                },
+                {
+                    "city": "Yorba Linda",
+                    "population": "68,706",
+                    "cases": "12"
+                },
+                {
+                    "city": "Other 1",
+                    "population": "202,478",
+                    "cases": "39"
+                },
+                {
+                    "city": "Unknown 2",
+                    "population": "",
+                    "cases": "46"
+                },
+                {
+                    "city": "Total",
+                    "population": "3,190,926",
+                    "cases": "403"
+                }
+            ]
+        }
     ]
 };
