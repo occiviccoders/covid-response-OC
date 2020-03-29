@@ -306,6 +306,8 @@ cvoc.map.on('load', function(){
     let popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false,
+        className: 'cvoc-popup',
+        maxWidth: '600px'
     })
     // parse the city data to json
     let data = cvoc.geoJson();
@@ -328,13 +330,27 @@ cvoc.map.on('load', function(){
             'circle-opacity': 0.6,
         }
     })
+    /*                ['boolean',
+                  ['feature-state', 'hover'],
+                  false
+                ],
+                0.8,
+                0.6,
+                */
     // create the map popup
     cvoc.map.on('mouseenter', 'city', function(element){
-        let description = "<b>Total Cases: " + element.features[0].properties.cases + "</b>";
-        let coordinates = element.features[0].geometry.coordinates.slice();
+        const city = element.features[0].properties.city;
+        const description = '<div class="row"><div class="col text-center"><h2><b>' + element.features[0].properties.cases + '</b></h2></div><div class="col popup-description">Total Cases<br><strong>' + city + "</strong></div></div>";
+        const coordinates = element.features[0].geometry.coordinates.slice();
         // change cursor to pointer
         cvoc.map.getCanvas().style.cursor = 'pointer';
         popup.setLngLat(coordinates).setHTML(description).addTo(cvoc.map);
+        /*map.setFeatureState({
+            source: 'cityLayer',
+            city: city,
+        }, {
+            hover: true
+        });*/
     })
 })
 
