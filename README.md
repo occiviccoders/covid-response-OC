@@ -16,6 +16,8 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 * [Bootstrap](https://getbootstrap.com/) - Front end framework
 * [jQuery](https://jquery.com/) - Needs no introduction
 * [chartjs](https://www.chartjs.org/) - Nice charts
+* [Mapbox](https://www.mapbox.com/) - For the map
+* [d3js](https://d3js.org/) - For the map pareto
 * [fontawesome](https://fontawesome.com/) - For the nice icons
 
 ## Back End
