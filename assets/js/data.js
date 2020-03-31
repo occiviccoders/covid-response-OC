@@ -1,17 +1,17 @@
 const cvoc = {
     "cities": [
         {
-            "city": "Total",
-            "location": [
-                -117.8311,
-                33.7175
-            ]
-        },
-        {
             "city": "Aliso Viejo",
             "location": [
                 -117.7263,
                 33.5685
+            ]
+        },
+        {
+            "city": "All of Orange County",
+            "location": [
+                -117.8311,
+                33.7175
             ]
         },
         {
@@ -99,6 +99,27 @@ const cvoc = {
             ]
         },
         {
+            "city": "La Palma",
+            "location": [
+                -118.0397,
+                33.843
+            ]
+        },
+        {
+            "city": "Laguna Beach",
+            "location": [
+                -117.777214,
+                33.541679
+            ]
+        },
+        {
+            "city": "Laguna Hills",
+            "location": [
+                -117.7128,
+                33.6125
+            ]
+        },
+        {
             "city": "Laguna Niguel",
             "location": [
                 -117.7149,
@@ -106,10 +127,24 @@ const cvoc = {
             ]
         },
         {
+            "city": "Laguna Woods",
+            "location": [
+                -117.7253305,
+                33.6103009
+            ]
+        },
+        {
             "city": "Lake Forest",
             "location": [
                 -117.6861,
                 33.6469
+            ]
+        },
+        {
+            "city": "Los Alamitos",
+            "location": [
+                -118.0726,
+                33.8031
             ]
         },
         {
@@ -187,6 +222,13 @@ const cvoc = {
             "location": [
                 -117.8236,
                 33.742
+            ]
+        },
+        {
+            "city": "Villa Park",
+            "location": [
+                -117.8067,
+                33.8097
             ]
         },
         {
@@ -2926,29 +2968,19 @@ const cvoc = {
                     "cases": "10"
                 },
                 {
-                    "city": "Other 1",
+                    "city": "Other*",
                     "population": "202,478",
                     "cases": "27"
                 },
                 {
-                    "city": "Unknown 2",
+                    "city": "Unknown**",
                     "population": "",
                     "cases": "34"
                 },
                 {
-                    "city": "Total Population",
+                    "city": "All of Orange County",
                     "population": "3,190,926",
-                    "cases": ""
-                },
-                {
-                    "city": "Total Cases",
-                    "population": "",
                     "cases": "321"
-                },
-                {
-                    "city": "Deaths",
-                    "population": "",
-                    "cases": "3"
                 }
             ]
         },
@@ -3148,17 +3180,17 @@ const cvoc = {
                     "cases": "12"
                 },
                 {
-                    "city": "Other 1",
+                    "city": "Other*",
                     "population": "202,478",
                     "cases": "39"
                 },
                 {
-                    "city": "Unknown 2",
+                    "city": "Unknown**",
                     "population": "",
                     "cases": "46"
                 },
                 {
-                    "city": "Total",
+                    "city": "All of Orange County",
                     "population": "3,190,926",
                     "cases": "403"
                 }
@@ -3365,19 +3397,281 @@ const cvoc = {
                     "cases": "12"
                 },
                 {
-                    "city": "Other 1",
+                    "city": "Other*",
                     "population": "202,478",
                     "cases": "40"
                 },
                 {
-                    "city": "Unknown 2",
+                    "city": "Unknown**",
                     "population": "",
                     "cases": "50"
                 },
                 {
-                    "city": "Total",
+                    "city": "All of Orange County",
                     "population": "3,222,498",
                     "cases": "431"
+                }
+            ]
+        },
+        {
+            "label": "Mar 30",
+            "data": [
+                {
+                    "category": "Total Cases",
+                    "type": "Cases",
+                    "count": "464"
+                },
+                {
+                    "category": "Total Cases",
+                    "type": "Deaths",
+                    "count": "4"
+                },
+                {
+                    "category": "Male",
+                    "type": "Cases",
+                    "count": "264"
+                },
+                {
+                    "category": "Male",
+                    "type": "Deaths",
+                    "count": "2"
+                },
+                {
+                    "category": "Female",
+                    "type": "Cases",
+                    "count": "199"
+                },
+                {
+                    "category": "Female",
+                    "type": "Deaths",
+                    "count": "2"
+                },
+                {
+                    "category": "<18",
+                    "type": "Cases",
+                    "count": "2"
+                },
+                {
+                    "category": "18 - 24",
+                    "type": "Cases",
+                    "count": "48"
+                },
+                {
+                    "category": "25 - 34",
+                    "type": "Cases",
+                    "count": "79"
+                },
+                {
+                    "category": "35 - 44",
+                    "type": "Cases",
+                    "count": "77"
+                },
+                {
+                    "category": "45 - 64",
+                    "type": "Cases",
+                    "count": "173"
+                },
+                {
+                    "category": "45 - 64",
+                    "type": "Deaths",
+                    "count": "1"
+                },
+                {
+                    "category": "≥ 65",
+                    "type": "Cases",
+                    "count": "83"
+                },
+                {
+                    "category": "≥ 65",
+                    "type": "Deaths",
+                    "count": "3"
+                }
+            ],
+            "location": [
+                {
+                    "city": "Aliso Viejo",
+                    "population": "51,372",
+                    "cases": "3"
+                },
+                {
+                    "city": "Anaheim",
+                    "population": "359,339",
+                    "cases": "42"
+                },
+                {
+                    "city": "Brea",
+                    "population": "45,606",
+                    "cases": "3"
+                },
+                {
+                    "city": "Buena Park",
+                    "population": "83,384",
+                    "cases": "15"
+                },
+                {
+                    "city": "Costa Mesa",
+                    "population": "115,830",
+                    "cases": "11"
+                },
+                {
+                    "city": "Cypress",
+                    "population": "49,833",
+                    "cases": "10"
+                },
+                {
+                    "city": "Dana Point",
+                    "population": "34,249",
+                    "cases": "7"
+                },
+                {
+                    "city": "Fountain Valley",
+                    "population": "56,652",
+                    "cases": "8"
+                },
+                {
+                    "city": "Fullerton",
+                    "population": "142,824",
+                    "cases": "12"
+                },
+                {
+                    "city": "Garden Grove",
+                    "population": "175,155",
+                    "cases": "8"
+                },
+                {
+                    "city": "Huntington Beach",
+                    "population": "203,761",
+                    "cases": "33"
+                },
+                {
+                    "city": "Irvine",
+                    "population": "280,202",
+                    "cases": "43"
+                },
+                {
+                    "city": "La Habra",
+                    "population": "63,542",
+                    "cases": "2"
+                },
+                {
+                    "city": "La Palma",
+                    "population": "15,820",
+                    "cases": "6"
+                },
+                {
+                    "city": "Laguna Beach",
+                    "population": "23,358",
+                    "cases": "22"
+                },
+                {
+                    "city": "Laguna Hills",
+                    "population": "31,572",
+                    "cases": "1"
+                },
+                {
+                    "city": "Laguna Niguel",
+                    "population": "66,748",
+                    "cases": "15"
+                },
+                {
+                    "city": "Laguna Woods",
+                    "population": "16,518",
+                    "cases": "***"
+                },
+                {
+                    "city": "Lake Forest",
+                    "population": "86,346",
+                    "cases": "9"
+                },
+                {
+                    "city": "Los Alamitos",
+                    "population": "11,721",
+                    "cases": "***"
+                },
+                {
+                    "city": "Mission Viejo",
+                    "population": "96,434",
+                    "cases": "9"
+                },
+                {
+                    "city": "Newport Beach",
+                    "population": "87,180",
+                    "cases": "41"
+                },
+                {
+                    "city": "Orange",
+                    "population": "141,691",
+                    "cases": "13"
+                },
+                {
+                    "city": "Placentia",
+                    "population": "52,333",
+                    "cases": "6"
+                },
+                {
+                    "city": "Rancho Santa Margarita",
+                    "population": "48,960",
+                    "cases": "5"
+                },
+                {
+                    "city": "San Clemente",
+                    "population": "65,405",
+                    "cases": "16"
+                },
+                {
+                    "city": "San Juan Capistrano",
+                    "population": "36,821",
+                    "cases": "9"
+                },
+                {
+                    "city": "Santa Ana",
+                    "population": "337,716",
+                    "cases": "22"
+                },
+                {
+                    "city": "Seal Beach",
+                    "population": "25,073",
+                    "cases": "1"
+                },
+                {
+                    "city": "Stanton",
+                    "population": "39,307",
+                    "cases": "1"
+                },
+                {
+                    "city": "Tustin",
+                    "population": "81,369",
+                    "cases": "7"
+                },
+                {
+                    "city": "Villa Park",
+                    "population": "5,933",
+                    "cases": "***"
+                },
+                {
+                    "city": "Westminster",
+                    "population": "92,610",
+                    "cases": "7"
+                },
+                {
+                    "city": "Yorba Linda",
+                    "population": "68,706",
+                    "cases": "13"
+                },
+                {
+                    "city": "Other*",
+                    "population": "202,478",
+                    "cases": "15"
+                },
+                {
+                    "city": "Unknown**",
+                    "population": "",
+                    "cases": "49"
+                },
+                {
+                    "city": "All of Orange County",
+                    "population": "3,222,498",
+                    "cases": "464"
                 }
             ]
         }

@@ -23,13 +23,13 @@ const fetchData = async (url) => {
     // fetch and parse the data
     let text = $('table').filter(function (i, element) {
         let not = $(this).text().indexOf("2020 Orange County Coronavirus Case Counts");
-        let has = $(this).text().indexOf("POPULATION*");
+        let has = $(this).text().indexOf("POPULATION");
         if(has>-1 && not<0){
             return $(this);
         }
     }).parsetable(false, false, true);
 
-    // jsonify data   
+    // jsonify data  
     for (let y = 1; y < text[0].length; y++) { 
         jsonData.push({
             city:text[0][y],
@@ -37,6 +37,28 @@ const fetchData = async (url) => {
             cases: text[2][y],
         })
     }
+
+    // check for new cities
+    jsonData.map(function(city){
+        let checkData = newCvoc.cities.find(function(index){
+            return index.city === city.city || city.city === "Other*" || city.city === "Unknown**";
+        })
+        if(!checkData){
+            newCvoc.cities.push({
+                city: city.city,
+                location: [],
+            })
+            newCvoc.cities.sort(function(a, b){
+                let nameA=a.city.toLowerCase(), nameB=b.city.toLowerCase()
+                if (nameA < nameB) //sort string ascending
+                    return -1 
+                if (nameA > nameB)
+                    return 1
+                return 0 //default return value (no sorting)
+            });
+            console.log(city.city)
+        }
+    })
 
     // add the latest data
     newCvoc.counts.push({

@@ -107,25 +107,31 @@ cvoc.geoJson = function(){
     const last = cvoc.counts.slice(-1)[0];
     return {
         "type": "FeatureCollection",
-        "features": cvoc.cities.map(function(city, index){
+        "features": cvoc.cities.reduce(function(cities, city, index){
             // get individual city data
             let cityData = last.location.find(function(datum){
                 return datum.city === city.city;
             })
-            cityData.population = Number(cityData.population.replace(",", ""));
-            cityData.cases = Number(cityData.cases);
-            cityData.normalized = cityData.cases/cityData.population;
-            cityData.displayed = cityData.cases; // a dynamic display variable
-            return {
-                "type": "Feature",
-                "id": index,
-                "properties": cityData,
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": city.location,
+            if(cityData){
+                cityData.population = Number(cityData.population.replace(",", ""));
+                cityData.cases = Number(cityData.cases.replace(",", ""));
+                cityData.normalized = cityData.cases/cityData.population;
+                cityData.displayed = cityData.cases; // a dynamic display variable
+                // filter out city with no case data
+                if(!isNaN(cityData.cases)){
+                    cities.push({
+                        "type": "Feature",
+                        "id": index,
+                        "properties": cityData,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": city.location,
+                        }
+                    })
                 }
             }
-        })
+            return cities;
+        },[])
     }
 }
 
@@ -303,7 +309,7 @@ cvoc.map.on('load', function(){
     let data = cvoc.geoJson();
     // fitler out the 'Total' city
     data.features = data.features.filter(function(feature){
-        return feature.properties.city !== 'Total';
+        return feature.properties.city !== 'All of Orange County';
     })
 
     // initialize the display value
@@ -483,8 +489,6 @@ cvoc.map.on('load', function(){
         sidebar.selectAll("div.map-sidebar-row")
         .data(data.features)
         .enter()
-        .append('div')
-        .attr("class", "map-sidebar-row-wrap")
         .append('div')
         .attr("class", "map-sidebar-row")
         .html(function(d,i){
