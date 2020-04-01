@@ -1,17 +1,17 @@
 const cvoc = {
     "cities": [
         {
-            "city": "Aliso Viejo",
-            "location": [
-                -117.7263,
-                33.5685
-            ]
-        },
-        {
             "city": "All of Orange County",
             "location": [
                 -117.8311,
                 33.7175
+            ]
+        },        
+        {
+            "city": "Aliso Viejo",
+            "location": [
+                -117.7263,
+                33.5685
             ]
         },
         {

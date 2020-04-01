@@ -24,6 +24,18 @@ cvoc.getCounts = function(category, type, date){
     }
 }
 
+// gets counts by category and type
+cvoc.getCountsByLocation = function(cityName, date){
+    const datum = date.location.find(function(city){
+        return city.city===cityName;
+    });
+    if (datum && datum.cases) {
+        return Number(datum.cases);
+    } else {
+        return 0;
+    }
+}
+
 // parse the count data into chartjs format data
 cvoc.chartTotals = function(){
     return cvoc.counts.reduce(function(returnArray, date){
@@ -202,6 +214,50 @@ cvoc.dailyTrend = function(){
     trendElement.innerHTML = trend;
 }
 
+cvoc.loadCitySelect = function(){
+    const last = cvoc.counts.slice(-1)[0];
+    const select = document.getElementById("chart_totals_select");
+    // update the order and map the options
+    last.location.sort(function(a, b){
+        let returnValue = 0
+        if(a.city === 'All of Orange County'){
+            returnValue = -1;
+        } else {
+            returnValue = 1;
+        }
+        return returnValue;
+    }).map(function(city, index){
+        select.options[index] = new Option(city.city, city.city);
+    });
+    // when select is changed
+    select.addEventListener('change', function() {
+        let city = this.value;
+        if(city !=='All of Orange County'){
+            // parse the data & updated the graph
+            cvoc.chart_totals.data = cvoc.counts.reduce(function(returnArray, date){
+                if(date.location && date.location.length){
+                    returnArray.labels.push(date.label);
+                    returnArray.datasets[0].data.push(cvoc.getCountsByLocation(city, date));
+                }
+                return returnArray;
+            },{
+                labels:[],
+                datasets: [{
+                    label:  'Total Cases',
+                    data: [],
+                    backgroundColor: 'rgba(198, 91, 16, 0.6)',
+                    borderColor: 'rgba(198, 91, 16, 1)',
+                }],
+            });            
+        } else {
+            // otherwise reset the data
+            cvoc.chart_totals.data = cvoc.chartTotals();
+        }
+        cvoc.chart_totals.update();
+    });
+    select.value = "All of Orange County";
+}
+
 // activate category buttons
 cvoc.loadButtons = function(){
     cvoc.categories.map(function(category){
@@ -225,6 +281,7 @@ cvoc.chart_totals = new Chart (ctx_totals, {
     type: 'bar',
     data: cvoc.chartTotals(),
     options: {
+        responsive: true,
         tooltips: {
             mode: 'index'
         },
@@ -235,6 +292,15 @@ cvoc.chart_totals = new Chart (ctx_totals, {
             }
         },
         aspectRatio: 1.5,
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    precision: 0,
+                }
+            }]
+        }
     }
 });
 
@@ -525,5 +591,7 @@ cvoc.map.on('load', function(){
 
 // get the daily rates
 cvoc.dailyTrend();
+// load the city select
+cvoc.loadCitySelect();
 // load buttons
 cvoc.loadButtons();

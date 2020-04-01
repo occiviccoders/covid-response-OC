@@ -52,7 +52,7 @@ const fetchData = async (url) => {
                 let nameA=a.city.toLowerCase(), nameB=b.city.toLowerCase()
                 if (nameA < nameB) //sort string ascending
                     return -1 
-                if (nameA > nameB)
+                if (nameA > nameB || nameA === 'All of Orange County')
                     return 1
                 return 0 //default return value (no sorting)
             });
