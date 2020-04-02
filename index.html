@@ -44,7 +44,7 @@
         <div class="container py-5 mb-5">
             <div class="row text-center">
                 <div class="col">
-                    <h2 class="my-4">Total Corona Virus Cases are <strong id="trend"></strong> in Orange County</h2>
+                    <h2 class="my-4">Total Corona Virus Cases are <strong id="trend"></strong> in <span id="city"></span></h2>
                     <div class="row justify-content-md-center">
                         <div class="col col-lg-6 col-md-9">
                             <div class="input-group mb-3">
@@ -62,6 +62,12 @@
             <div class="row">
                 <div class="col">
                     <canvas id="chart_totals"></canvas>
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center">
+                <div class="col">
+                    <small class="text-muted">* The "other" category includes the aggregate of the unincorporated areas of the county, and cities that have both a population <25,000 and <5 cases.</small><br>
+                    <small class="text-muted">** More information may become available as individual case investigations are completed.</small>
                 </div>
             </div>
         </div>
