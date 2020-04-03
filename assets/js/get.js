@@ -50,9 +50,9 @@ const fetchData = async (url) => {
             })
             newCvoc.cities.sort(function(a, b){
                 let nameA=a.city.toLowerCase(), nameB=b.city.toLowerCase()
-                if (nameA < nameB) //sort string ascending
+                if (nameA < nameB || nameA === 'All of Orange County') //sort string ascending
                     return -1 
-                if (nameA > nameB || nameA === 'All of Orange County')
+                if (nameA > nameB)
                     return 1
                 return 0 //default return value (no sorting)
             });

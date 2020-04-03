@@ -41,7 +41,9 @@ cvoc.chartTotals = function(){
     return cvoc.counts.reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
         returnArray.datasets[0].data.push(cvoc.getCounts("Total Cases", "Cases", date));
-        returnArray.datasets[1].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
+        returnArray.datasets[1].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
+        returnArray.datasets[2].data.push(cvoc.getCounts("Currently", "ICU", date));
+        returnArray.datasets[3].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
         return returnArray;
     },{
         labels:[],
@@ -51,10 +53,25 @@ cvoc.chartTotals = function(){
             backgroundColor: 'rgba(198, 91, 16, 0.6)',
             borderColor: 'rgba(198, 91, 16, 1)',
         },{
+            label:  'Currently Hospitalized',
+            data: [],
+            backgroundColor: '#FF4023',
+            borderColor: '#FF4023',
+            fill: false,
+            type: 'line',
+        },{
+            label:  'Currently in ICU',
+            data: [],
+            backgroundColor: '#B473BC',
+            borderColor: '#B473BC',
+            fill: false,
+            type: 'line',
+        },{
             label:  'Deaths',
             data: [],
             backgroundColor: 'rgb(155, 155, 155, 0.3)',
             borderColor: 'rgb(155, 155, 155, 1)',
+            fill: false,
             type: 'line',
         }],
     });
@@ -325,7 +342,7 @@ cvoc.chart_gender = new Chart (ctx_gender, {
     data: cvoc.chartByGender(),
     options: {
         legend: {
-            position: 'bottom',
+            position: 'left',
             labels: {
                 fontSize: 16
             }
@@ -344,7 +361,7 @@ cvoc.chart_age = new Chart (ctx_age, {
     data: cvoc.chartByAge(),
     options: {
         legend: {
-            position: 'bottom',
+            position: 'left',
             labels: {
                 fontSize: 16
             }
