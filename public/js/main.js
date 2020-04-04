@@ -19,6 +19,7 @@ cvoc.checkBrowser = function() {
     const trident = ua.indexOf('Trident/');
     if(msie>0 || trident>0){
         document.getElementById("cvoc-ie").style.display = "block";
+        document.getElementById("cvoc-main").style.display = "none";
     }
 }
 // Browser check
@@ -237,7 +238,7 @@ cvoc.dailyTrend = function(city){
         city = 'Orange County';
     }
     if(percent<=0){
-        trend = "at " + Math.abs(percent.toFixed(0)) + "%";
+        trend = "up " + Math.abs(percent.toFixed(0)) + "%";
         trendElement.style.color = "green";
     } else {
         trend = "up " + percent.toFixed(0) + "%";
@@ -415,13 +416,23 @@ cvoc.map = new mapboxgl.Map({
 })
 
 cvoc.map.on('load', function(){
-
+    // set max radius by data
+    let maxRadius = 0;
+    // radius multiplier to size the bubbles
+    let radiusMultiplier = 0;
     // parse the city data to json
     let data = cvoc.geoJson();
     // fitler out the 'Total' city
     data.features = data.features.filter(function(feature){
-        return feature.properties.city !== 'All of Orange County';
+        if(feature.properties.city !== 'All of Orange County'){
+            // find max radius
+            if (feature.properties.cases > maxRadius){
+                maxRadius = feature.properties.cases;
+            }
+            return feature;            
+        }
     })
+    radiusMultiplier = 50/maxRadius;
 
     // initialize the display value
     cvoc.displayed = 'Total Cases';
@@ -453,8 +464,8 @@ cvoc.map.on('load', function(){
                     ['feature-state', 'hover'],
                     false
                 ],
-                ['*', 1.25, ['number', ['get', 'displayed']]],
-                ['number', ['get', 'displayed']],
+                ['*', radiusMultiplier, ['*', 1.25, ['number', ['get', 'displayed']]]],
+                ['*', radiusMultiplier, ['number', ['get', 'displayed']]],
             ],
             'circle-color': [
                 'case',
@@ -564,7 +575,7 @@ cvoc.map.on('load', function(){
             });
             cvoc.updateMap(data);
             cvoc.updateSidebar(data);
-        });        
+        });
     }
 
     // function to update the map
