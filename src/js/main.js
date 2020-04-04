@@ -21,6 +21,8 @@ cvoc.checkBrowser = function() {
         document.getElementById("cvoc-ie").style.display = "block";
     }
 }
+// Browser check
+cvoc.checkBrowser();
 
 // gets counts by category and type
 cvoc.getCounts = function(category, type, date){
@@ -638,5 +640,3 @@ cvoc.dailyTrend('Orange County');
 cvoc.loadCitySelect();
 // load buttons
 cvoc.loadButtons();
-// Browser check
-cvoc.checkBrowser();
