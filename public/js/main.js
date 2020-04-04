@@ -12,6 +12,16 @@ const ctx_age_by_time = document.getElementById('chart_age_by_time').getContext(
 // set the categories
 cvoc.categories = ['Total Cases', 'Male', 'Female', '<18', '18 - 49', '50 - 64', '≥ 65'];
 
+// Browser check
+cvoc.checkBrowser = function() {
+    const ua = window.navigator.userAgent;
+    const msie = ua.indexOf('MSIE ');
+    const trident = ua.indexOf('Trident/');
+    if(msie>0 || trident>0){
+        document.getElementById("cvoc-ie").style.display = "block";
+    }
+}
+
 // gets counts by category and type
 cvoc.getCounts = function(category, type, date){
     const datum = date.data.find(function(criteria){
@@ -628,12 +638,5 @@ cvoc.dailyTrend('Orange County');
 cvoc.loadCitySelect();
 // load buttons
 cvoc.loadButtons();
-
-cvoc.checkBrowser = function() {
-    const ua = window.navigator.userAgent;
-    const msie = ua.indexOf('MSIE ');
-    const trident = ua.indexOf('Trident/');
-    if(msie>0 || trident>0){
-        document.getElementById("cvoc-ie").style.display = "block";
-    }
-}
+// Browser check
+cvoc.checkBrowser();
