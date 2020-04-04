@@ -237,7 +237,7 @@ cvoc.dailyTrend = function(city){
         city = 'Orange County';
     }
     if(percent<=0){
-        trend = "down " + Math.abs(percent.toFixed(0)) + "%";
+        trend = "at " + Math.abs(percent.toFixed(0)) + "%";
         trendElement.style.color = "green";
     } else {
         trend = "up " + percent.toFixed(0) + "%";
