@@ -628,3 +628,12 @@ cvoc.dailyTrend('Orange County');
 cvoc.loadCitySelect();
 // load buttons
 cvoc.loadButtons();
+
+cvoc.checkBrowser = function() {
+    const ua = window.navigator.userAgent;
+    const msie = ua.indexOf('MSIE ');
+    const trident = ua.indexOf('Trident/');
+    if(msie>0 || trident>0){
+        document.getElementById("cvoc-ie").style.display = "block";
+    }
+}
