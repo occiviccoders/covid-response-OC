@@ -565,13 +565,16 @@ cvoc.map.on('load', function(){
             cvoc.displayed = this.value;
             cvoc.popup.remove(); // clear popup
             // re parse the geodata
-            data.features = data.features.map(function(city){
+            data.features = data.features.filter(function(city){
                 if(cvoc.displayed === 'Total Cases'){
                     city.properties.displayed = city.properties.cases;         
                 } else {
                     city.properties.displayed = Math.round(city.properties.normalized * 100000);
                 }
-                return city;
+                // ensure is number
+                if(!isNaN(city.properties.displayed)){
+                    return city;
+                }
             });
             cvoc.updateMap(data);
             cvoc.updateSidebar(data);

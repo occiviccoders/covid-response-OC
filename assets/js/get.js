@@ -48,7 +48,7 @@ const fetchData = async (url) => {
                 city: city.city,
                 location: [],
             })
-            newCvoc.cities.sort(function(a, b){
+            newCvoc.cities = newCvoc.cities.sort(function(a, b){
                 let nameA=a.city.toLowerCase(), nameB=b.city.toLowerCase()
                 if (nameA < nameB || nameA === 'All of Orange County') //sort string ascending
                     return -1 
