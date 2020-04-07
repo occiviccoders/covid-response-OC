@@ -1,6 +1,6 @@
 {
   "name": "covid-response-oc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An app to help local OC residents through covid 19",
   "main": "gulpfile.js",
   "dependencies": {
@@ -23,6 +23,7 @@
   },
   "scripts": {
     "get": "npx babel-node assets/js/get.js",
+    "write": "node assets/js/write.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
