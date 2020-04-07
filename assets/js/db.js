@@ -5657,6 +5657,192 @@ const cvoc = {
                     "cases": "882"
                 }
             ]
+        },
+        {
+            "label": "Apr 7",
+            "data": [],
+            "location": [
+                {
+                    "city": "Aliso Viejo",
+                    "population": "51,372",
+                    "cases": "9"
+                },
+                {
+                    "city": "Anaheim",
+                    "population": "359,339",
+                    "cases": "92"
+                },
+                {
+                    "city": "Brea",
+                    "population": "45,606",
+                    "cases": "4"
+                },
+                {
+                    "city": "Buena Park",
+                    "population": "83,384",
+                    "cases": "28"
+                },
+                {
+                    "city": "Costa Mesa",
+                    "population": "115,830",
+                    "cases": "20"
+                },
+                {
+                    "city": "Cypress",
+                    "population": "49,833",
+                    "cases": "21"
+                },
+                {
+                    "city": "Dana Point",
+                    "population": "34,249",
+                    "cases": "11"
+                },
+                {
+                    "city": "Fountain Valley",
+                    "population": "56,652",
+                    "cases": "12"
+                },
+                {
+                    "city": "Fullerton",
+                    "population": "142,824",
+                    "cases": "20"
+                },
+                {
+                    "city": "Garden Grove",
+                    "population": "175,155",
+                    "cases": "22"
+                },
+                {
+                    "city": "Huntington Beach",
+                    "population": "203,761",
+                    "cases": "62"
+                },
+                {
+                    "city": "Irvine",
+                    "population": "280,202",
+                    "cases": "77"
+                },
+                {
+                    "city": "La Habra",
+                    "population": "63,542",
+                    "cases": "15"
+                },
+                {
+                    "city": "La Palma",
+                    "population": "15,820",
+                    "cases": "7"
+                },
+                {
+                    "city": "Ladera Ranch",
+                    "population": "30,288",
+                    "cases": "8"
+                },
+                {
+                    "city": "Laguna Beach",
+                    "population": "23,358",
+                    "cases": "34"
+                },
+                {
+                    "city": "Laguna Hills",
+                    "population": "31,572",
+                    "cases": "9"
+                },
+                {
+                    "city": "Laguna Niguel",
+                    "population": "66,748",
+                    "cases": "21"
+                },
+                {
+                    "city": "Lake Forest",
+                    "population": "86,346",
+                    "cases": "16"
+                },
+                {
+                    "city": "Mission Viejo",
+                    "population": "96,434",
+                    "cases": "22"
+                },
+                {
+                    "city": "Newport Beach",
+                    "population": "87,180",
+                    "cases": "73"
+                },
+                {
+                    "city": "Orange",
+                    "population": "141,691",
+                    "cases": "29"
+                },
+                {
+                    "city": "Placentia",
+                    "population": "52,333",
+                    "cases": "20"
+                },
+                {
+                    "city": "Rancho Santa Margarita",
+                    "population": "48,960",
+                    "cases": "6"
+                },
+                {
+                    "city": "San Clemente",
+                    "population": "65,405",
+                    "cases": "38"
+                },
+                {
+                    "city": "San Juan Capistrano",
+                    "population": "36,821",
+                    "cases": "16"
+                },
+                {
+                    "city": "Santa Ana",
+                    "population": "337,716",
+                    "cases": "62"
+                },
+                {
+                    "city": "Seal Beach",
+                    "population": "25,073",
+                    "cases": "3"
+                },
+                {
+                    "city": "Stanton",
+                    "population": "39,307",
+                    "cases": "2"
+                },
+                {
+                    "city": "Trabuco Canyon",
+                    "population": "Not Available",
+                    "cases": "5"
+                },
+                {
+                    "city": "Tustin",
+                    "population": "81,369",
+                    "cases": "16"
+                },
+                {
+                    "city": "Westminster",
+                    "population": "92,610",
+                    "cases": "13"
+                },
+                {
+                    "city": "Yorba Linda",
+                    "population": "68,706",
+                    "cases": "27"
+                },
+                {
+                    "city": "Other*",
+                    "population": "133,012",
+                    "cases": "17"
+                },
+                {
+                    "city": "Unknown**",
+                    "population": "",
+                    "cases": "45"
+                },
+                {
+                    "city": "All of Orange County",
+                    "population": "3,222,498",
+                    "cases": "882"
+                }
+            ]
         }
     ]
 };

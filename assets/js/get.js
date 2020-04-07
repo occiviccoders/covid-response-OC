@@ -66,6 +66,14 @@ const fetchData = async (url) => {
         data: [],
         location: jsonData
     });
+
+    //this creates a usable json file.
+    fs.writeFile('assets/js/currentData.json', JSON.stringify(newCvoc), 
+                 (err) => { if(err) throw err;})
+
+    //kaggle can autoupdate a dataset by connecting it to a repo, which allows
+    //this data to be used for statistical analysis, which would be very nice
+
     // write the frontend data
     writeString = "const cvoc = " + JSON.stringify(newCvoc, null, 4) + ";\n";
     // write the data
