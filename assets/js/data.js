@@ -5946,97 +5946,112 @@ const cvoc = {
                 {
                     "category": "Total Cases",
                     "type": "Cases",
-                    "count": "1016"
+                    "count": 1016
                 },
                 {
                     "category": "Total Cases",
                     "type": "Deaths",
-                    "count": "17"
+                    "count": 17
                 },
                 {
                     "category": "Currently",
                     "type": "Hospitalized",
-                    "count": "99"
+                    "count": 99
                 },
                 {
                     "category": "Currently",
                     "type": "ICU",
-                    "count": "59"
+                    "count": 59
                 },
                 {
                     "category": "Male",
                     "type": "Cases",
-                    "count": "530"
+                    "count": 530
                 },
                 {
                     "category": "Male",
                     "type": "Deaths",
-                    "count": "10"
+                    "count": 10
                 },
                 {
                     "category": "Female",
                     "type": "Cases",
-                    "count": "484"
+                    "count": 484
                 },
                 {
                     "category": "Female",
                     "type": "Deaths",
-                    "count": "7"
+                    "count": 7
                 },
                 {
                     "category": "Unknown",
                     "type": "Cases",
-                    "count": "0"
+                    "count": 2
+                },
+                {
+                    "category": "Unknown",
+                    "type": "Deaths",
+                    "count": 0
                 },
                 {
                     "category": "<18",
                     "type": "Cases",
-                    "count": "12"
+                    "count": 12
+                },
+                {
+                    "category": "<18",
+                    "type": "Deaths",
+                    "count": 0
                 },
                 {
                     "category": "18 - 24",
                     "type": "Cases",
-                    "count": "88"
+                    "count": 88
+                },
+                {
+                    "category": "18 - 24",
+                    "type": "Deaths",
+                    "count": 0
                 },
                 {
                     "category": "25 - 34",
                     "type": "Cases",
-                    "count": "164"
+                    "count": 164
                 },
                 {
                     "category": "25 - 34",
                     "type": "Deaths",
-                    "count": "2"
+                    "count": 2
                 },
                 {
                     "category": "35 - 44",
                     "type": "Cases",
-                    "count": "148"
+                    "count": 148
                 },
                 {
                     "category": "35 - 44",
                     "type": "Deaths",
-                    "count": "1"
+                    "count": 1
                 },
                 {
                     "category": "45 - 64",
                     "type": "Cases",
-                    "count": "408"
+                    "count": 408
                 },
                 {
                     "category": "45 - 64",
                     "type": "Deaths",
-                    "count": "5"
+                    "count": 5
                 },
                 {
                     "category": "≥ 65",
                     "type": "Cases",
-                    "count": "196"
+                    "count": 196
                 },
                 {
                     "category": "≥ 65",
                     "type": "Deaths",
-                    "count": "9"
+                    "count": 9
                 }
             ],
             "location": [
