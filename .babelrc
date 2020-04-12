@@ -1,0 +1,6 @@
+// used for ES6 so that node can run my import script
+{   
+    "presets": [
+      "@babel/preset-env"   
+    ] 
+}

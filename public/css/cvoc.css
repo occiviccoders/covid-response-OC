@@ -1,18 +1,74 @@
+/* Nav */
 #header .navbar-brand img {
   width: 200px; }
 
-#map {
+/* Head */
+#head {
+  background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(https://res.cloudinary.com/initialapps/image/upload/c_scale,w_1200/v1585013843/OCCC/header.jpg) no-repeat center;
+  background-size: cover; }
+
+/* change all .btn */
+@media (max-width: 768px) {
+  .btn-group-lg > .btn, .btn-responsive {
+    padding: 10px;
+    font-size: 80%; } }
+
+/* IE Warning */
+#cvoc-ie {
+  display: none; }
+
+#cvoc-map {
   width: 100%;
-  height: 80vh; }
+  height: 85vh; }
 
-.foodbank {
-  color: #5a3fc0; }
+.cvoc-popup {
+  background-color: transparent;
+  padding: 0px; }
 
-.donateblood {
-  color: #e55e5e; }
+.cvoc-popup.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.cvoc-popup.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip,
+.cvoc-popup.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
+  border-bottom-color: rgba(0, 0, 0, 0.6); }
 
-.homelessshelter {
-  color: #fbb03b; }
+.cvoc-popup.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.cvoc-popup.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip,
+.cvoc-popup.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
+  border-top-color: rgba(0, 0, 0, 0.6); }
+
+.cvoc-popup.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: rgba(0, 0, 0, 0.6); }
+
+.cvoc-popup.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: rgba(0, 0, 0, 0.6); }
+
+.cvoc-popup.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+  border-top: none;
+  border-right: none;
+  border-bottom-color: #fff; }
+
+.cvoc-popup .mapboxgl-popup-content {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #FFF;
+  font-size: 14px;
+  white-space: nowrap; }
+
+.cvoc-popup .mapboxgl-popup-content h2 {
+  margin-bottom: 0px; }
+
+.cvoc-popup .mapboxgl-popup-content strong {
+  font-size: larger; }
+
+#cvoc-map-sidebar {
+  height: 810px;
+  position: relative;
+  width: 100%; }
+
+.map-sidebar-row {
+  position: absolute;
+  width: 100%; }
 
 footer {
   display: inline-block;

@@ -1,9 +1,10 @@
 {
   "name": "covid-response-oc",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "An app to help local OC residents through covid 19",
   "main": "gulpfile.js",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "cheerio-tableparser": "^1.0.1",
@@ -14,8 +15,15 @@
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0"
+  },
   "scripts": {
+    "get": "npx babel-node assets/js/get.js",
+    "write": "node assets/js/write.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
