@@ -24,6 +24,7 @@
   "scripts": {
     "get": "npx babel-node assets/js/get.js",
     "write": "node assets/js/write.js",
+    "push": "git add --all; git commit -m 'adding todays data'; git push origin master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
