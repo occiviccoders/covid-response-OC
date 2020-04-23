@@ -10378,7 +10378,7 @@ const cvoc = {
                 {
                     "category": "Total Cases",
                     "type": "Cases",
-                    "count": 21753
+                    "count": 1753
                 },
                 {
                     "category": "Total Cases",
