@@ -5,6 +5,7 @@ mapboxgl.accessToken = "pk.eyJ1IjoiaW5pdGlhbGFwcHMiLCJhIjoiY2pzMnBzZGZnMDM0azQ5b
 // use cvoc for data object
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
+const ctx_daily = document.getElementById('chart_daily').getContext('2d');  // for the chart
 const ctx_gender = document.getElementById('chart_gender').getContext('2d');  // for the chart
 const ctx_age = document.getElementById('chart_age').getContext('2d');  // for the chart
 const ctx_age_by_time = document.getElementById('chart_age_by_time').getContext('2d');  // for the chart
@@ -54,9 +55,7 @@ cvoc.chartTotals = function(){
     return cvoc.counts.reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
         returnArray.datasets[0].data.push(cvoc.getCounts("Total Cases", "Cases", date));
-        returnArray.datasets[1].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
-        returnArray.datasets[2].data.push(cvoc.getCounts("Currently", "ICU", date));
-        returnArray.datasets[3].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
+        returnArray.datasets[1].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
         return returnArray;
     },{
         labels:[],
@@ -66,26 +65,50 @@ cvoc.chartTotals = function(){
             backgroundColor: 'rgba(198, 91, 16, 0.6)',
             borderColor: 'rgba(198, 91, 16, 1)',
         },{
-            label:  'Currently Hospitalized',
-            data: [],
-            backgroundColor: '#FF4023',
-            borderColor: '#FF4023',
-            fill: false,
-            type: 'line',
-        },{
-            label:  'Currently in ICU',
-            data: [],
-            backgroundColor: '#B473BC',
-            borderColor: '#B473BC',
-            fill: false,
-            type: 'line',
-        },{
-            label:  'Deaths',
+            label:  'Total Deaths',
             data: [],
             backgroundColor: 'rgb(155, 155, 155, 0.3)',
             borderColor: 'rgb(155, 155, 155, 1)',
             fill: false,
             type: 'line',
+        }],
+    });
+}
+
+// parse the count data into chartjs format data
+cvoc.chartDaily = function(){
+    return cvoc.counts.reduce(function(returnArray, date, index, startArray){
+        let todayCount = cvoc.getCounts("Total Cases", "Cases", date);
+        let yesterdayCount = 0;
+        // get the difference
+        if(index){
+            yesterdayCount = cvoc.getCounts("Total Cases", "Cases", startArray[index-1]);
+        }
+        returnArray.labels.push(date.label);
+        returnArray.datasets[0].data.push(todayCount - yesterdayCount);
+        returnArray.datasets[1].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
+        returnArray.datasets[2].data.push(cvoc.getCounts("Currently", "ICU", date));
+        return returnArray;
+    },{
+        labels:[],
+        datasets: [{
+            label:  'Cases Reported',
+            data: [],
+            backgroundColor: 'rgba(72, 72, 63, 0.33)',
+            borderColor: 'rgba(72, 72, 63, 1)',
+            lineTension: 0.25,
+        },{
+            label:  'Currently Hospitalized',
+            data: [],
+            backgroundColor: 'rgba(61, 83, 141, 0.33)',
+            borderColor: 'rgba(61, 83, 141, 1)',
+            lineTension: 0.25,
+        },{
+            label:  'Currently in ICU',
+            data: [],
+            backgroundColor: 'rgba(54, 130, 127, 0.33)',
+            borderColor: 'rgba(54, 130, 127, 1)',
+            lineTension: 0.25,
         }],
     });
 }
@@ -326,6 +349,33 @@ cvoc.updateCategoryByTime = function(category){
 cvoc.chart_totals = new Chart (ctx_totals, {
     type: 'bar',
     data: cvoc.chartTotals(),
+    options: {
+        responsive: true,
+        tooltips: {
+            mode: 'index'
+        },
+        legend: {
+            position: 'bottom',
+            labels: {
+                fontSize: 16
+            }
+        },
+        aspectRatio: 1.5,
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    precision: 0,
+                }
+            }]
+        }
+    }
+});
+
+cvoc.chart_daily = new Chart (ctx_daily, {
+    type: 'line',
+    data: cvoc.chartDaily(),
     options: {
         responsive: true,
         tooltips: {
