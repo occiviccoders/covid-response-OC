@@ -94,21 +94,24 @@ cvoc.chartDaily = function(){
         datasets: [{
             label:  'Cases Reported',
             data: [],
-            backgroundColor: 'rgba(72, 72, 63, 0.33)',
-            borderColor: 'rgba(72, 72, 63, 1)',
+            backgroundColor: 'rgba(90, 90, 90, 0.33)',
+            borderColor: 'rgba(90, 90, 90, 1)',
             lineTension: 0.25,
+            borderWidth: 2,
         },{
             label:  'Currently Hospitalized',
             data: [],
             backgroundColor: 'rgba(61, 83, 141, 0.33)',
             borderColor: 'rgba(61, 83, 141, 1)',
             lineTension: 0.25,
+            borderWidth: 2,
         },{
             label:  'Currently in ICU',
             data: [],
             backgroundColor: 'rgba(54, 130, 127, 0.33)',
             borderColor: 'rgba(54, 130, 127, 1)',
             lineTension: 0.25,
+            borderWidth: 2,
         }],
     });
 }
@@ -271,6 +274,20 @@ cvoc.dailyTrend = function(city){
     trendElement.style.fontStyle = "italic";
     trendElement.innerHTML = trend;
     cityElement.innerHTML = city;
+}
+
+// set the 3 day trend
+cvoc.threeDayTrends = function(){
+    const today = cvoc.counts.slice(-1)[0];
+    const threeday = cvoc.counts.slice(-4)[0];
+    console.log(threeday)
+    const trend = today.location.filter(function(city){
+        if(city.city!=="All of Orange County" || city.city!=="Unknown**" || city.city!=="Other*"){
+            threeday.location.find(function(){
+
+            });
+        }
+    })
 }
 
 cvoc.loadCitySelect = function(){
@@ -582,7 +599,7 @@ cvoc.map.on('load', function(){
     });
 
     // for touch devices
-    cvoc.map.on('touchemove', 'city', function(element) {
+    cvoc.map.on('touchmove', 'city', function(element) {
         if (element.features.length > 0) {
             if (cvoc.hover) {
                 // set the hover attribute to false with feature state
@@ -612,17 +629,45 @@ cvoc.map.on('load', function(){
     cvoc.loadSelect = function() {
         // load the map select button
         document.getElementById('map-select').addEventListener('change', function() {
+            // set max radius by data
+            let maxRadius = 0;
+            // radius multiplier to size the bubbles
+            let radiusMultiplier = 0;
+            let circleRadius = [];
             cvoc.displayed = this.value;
             cvoc.popup.remove(); // clear popup
             // re parse the geodata
-            data.features = data.features.map(function(city){
+            data.features = data.features.map(function(city, index, startArray){
+                // calculate trend
+                /*let priorCount = 0
+                if (index>6){
+                    priorCount = cvoc.
+                }*/
                 if(cvoc.displayed === 'Total Cases'){
                     city.properties.displayed = city.properties.cases;         
                 } else {
                     city.properties.displayed = Math.round(city.properties.normalized * 100000);
                 }
+                // find max radius
+                if (city.properties.displayed > maxRadius){
+                    maxRadius = city.properties.displayed;
+                }
                 return city;
             });
+            // set the multiplier
+            radiusMultiplier = 50/maxRadius;
+            // update the map circles
+            circleRadius = [
+                'case',
+                [
+                    'boolean',
+                    ['feature-state', 'hover'],
+                    false
+                ],
+                ['*', radiusMultiplier, ['*', 1.25, ['number', ['get', 'displayed']]]],
+                ['*', radiusMultiplier, ['number', ['get', 'displayed']]],
+            ]
+            cvoc.map.setPaintProperty("city", 'circle-radius', circleRadius);
             cvoc.updateMap(data);
             cvoc.updateSidebar(data);
         });
@@ -697,6 +742,8 @@ cvoc.map.on('load', function(){
 
 // get the daily rates
 cvoc.dailyTrend('Orange County');
+// get the three day trend
+cvoc.threeDayTrends();
 // load the city select
 cvoc.loadCitySelect();
 // load buttons
