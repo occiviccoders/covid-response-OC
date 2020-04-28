@@ -280,14 +280,21 @@ cvoc.dailyTrend = function(city){
 cvoc.threeDayTrends = function(){
     const today = cvoc.counts.slice(-1)[0];
     const threeday = cvoc.counts.slice(-4)[0];
-    console.log(threeday)
     const trend = today.location.filter(function(city){
-        if(city.city!=="All of Orange County" || city.city!=="Unknown**" || city.city!=="Other*"){
-            threeday.location.find(function(){
-
+        // calculate the difference
+        if(city.city!=="All of Orange County" && city.city!=="Unknown**" && city.city!=="Other*"){
+            let refCity = threeday.location.find(function(index){
+                return index.city === city.city;
             });
+            if(refCity){
+                city.threeDayRise = Math.abs(100*(city.cases - refCity.cases)/refCity.cases).toFixed(0); 
+                return city;                
+            }
         }
+    }).sort(function(a, b){
+        return b.threeDayRise - a.threeDayRise;
     })
+    console.log(trend);
 }
 
 cvoc.loadCitySelect = function(){
@@ -638,11 +645,6 @@ cvoc.map.on('load', function(){
             cvoc.popup.remove(); // clear popup
             // re parse the geodata
             data.features = data.features.map(function(city, index, startArray){
-                // calculate trend
-                /*let priorCount = 0
-                if (index>6){
-                    priorCount = cvoc.
-                }*/
                 if(cvoc.displayed === 'Total Cases'){
                     city.properties.displayed = city.properties.cases;         
                 } else {
