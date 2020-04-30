@@ -280,6 +280,31 @@ cvoc.dailyTrend = function(city){
 cvoc.threeDayTrends = function(){
     const today = cvoc.counts.slice(-1)[0];
     const threeday = cvoc.counts.slice(-4)[0];
+    const firstCity = document.getElementById("firstCity");
+    const firstNew = document.getElementById("firstNew");
+    const firstTotal = document.getElementById("firstTotal");
+    const firstNormal = document.getElementById("firstNormal");
+    const secondCity = document.getElementById("secondCity");
+    const secondNew = document.getElementById("secondNew");
+    const secondTotal = document.getElementById("secondTotal");
+    const secondNormal = document.getElementById("secondNormal");
+    const thirdCity = document.getElementById("thirdCity");
+    const thirdNew = document.getElementById("thirdNew");
+    const thirdTotal = document.getElementById("thirdTotal");
+    const thirdNormal = document.getElementById("thirdNormal");
+    const fourthCity = document.getElementById("fourthCity");
+    const fourthNew = document.getElementById("fourthNew");
+    const fourthTotal = document.getElementById("fourthTotal");
+    const fourthNormal = document.getElementById("fourthNormal");
+    const fifthCity = document.getElementById("fifthCity");
+    const fifthNew = document.getElementById("fifthNew");
+    const fifthTotal = document.getElementById("fifthTotal");
+    const fifthNormal = document.getElementById("fifthNormal");
+    const sixthCity = document.getElementById("sixthCity");
+    const sixthNew = document.getElementById("sixthNew");
+    const sixthTotal = document.getElementById("sixthTotal");
+    const sixthNormal = document.getElementById("sixthNormal");
+
     const trend = today.location.filter(function(city){
         // calculate the difference
         if(city.city!=="All of Orange County" && city.city!=="Unknown**" && city.city!=="Other*"){
@@ -294,7 +319,31 @@ cvoc.threeDayTrends = function(){
     }).sort(function(a, b){
         return b.threeDayRise - a.threeDayRise;
     })
-    console.log(trend);
+
+    firstCity.innerHTML = trend[0].city;
+    firstNew.innerHTML = trend[0].threeDayRise;
+    firstTotal.innerHTML = trend[0].cases;
+    firstNormal.innerHTML = Math.round(Number(trend[0].cases.replace(",", ""))/Number(trend[0].population.replace(",", "")) * 100000);
+    secondCity.innerHTML = trend[1].city;
+    secondNew.innerHTML = trend[1].threeDayRise;
+    secondTotal.innerHTML = trend[1].cases;
+    secondNormal.innerHTML = Math.round(Number(trend[1].cases.replace(",", ""))/Number(trend[1].population.replace(",", "")) * 100000);
+    thirdCity.innerHTML = trend[2].city;
+    thirdNew.innerHTML = trend[2].threeDayRise;
+    thirdTotal.innerHTML = trend[2].cases;
+    thirdNormal.innerHTML = Math.round(Number(trend[2].cases.replace(",", ""))/Number(trend[2].population.replace(",", "")) * 100000);
+    fourthCity.innerHTML = trend[3].city;
+    fourthNew.innerHTML = trend[3].threeDayRise;
+    fourthTotal.innerHTML = trend[3].cases;
+    fourthNormal.innerHTML = Math.round(Number(trend[3].cases.replace(",", ""))/Number(trend[3].population.replace(",", "")) * 100000);
+    fifthCity.innerHTML = trend[4].city;
+    fifthNew.innerHTML = trend[4].threeDayRise;
+    fifthTotal.innerHTML = trend[4].cases;
+    fifthNormal.innerHTML = Math.round(Number(trend[4].cases.replace(",", ""))/Number(trend[4].population.replace(",", "")) * 100000);
+    sixthCity.innerHTML = trend[5].city;
+    sixthNew.innerHTML = trend[5].threeDayRise;
+    sixthTotal.innerHTML = trend[5].cases;
+    sixthNormal.innerHTML = Math.round(Number(trend[5].cases.replace(",", ""))/Number(trend[5].population.replace(",", "")) * 100000);
 }
 
 cvoc.loadCitySelect = function(){

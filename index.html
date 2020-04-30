@@ -97,24 +97,62 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="container py-5 mb-5">
-                <div class="row text-center">
-                    <div class="col">
-                        <h2 class="my-4">Daily Corona Virus Cases Reported, Hospitalized, and in ICU</h2>
+                        <div class="card-deck">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#1 <span id="firstCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="firstNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="firstTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="firstNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#2 <span id="secondCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="secondNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="secondTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="secondNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#3 <span id="thirdCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="thirdNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="thirdTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="thirdNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <canvas id="chart_daily"></canvas>
-                    </div>
-                </div>
-                <div class="row text-center justify-content-md-center">
-                    <div class="col">
-                        <small class="text-muted">Note, hospital and ICU numbers were not available before March 31.</small>
+                        <div class="card-deck">
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#4 <span id="fourthCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="fourthNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="fourthTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="fourthNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#5 <span id="fifthCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="fifthNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="fifthTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="fifthNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><h5 class="card-title mb-0">#6 <span id="sixthCity"></span></h5></div>
+                                <div class="card-body">                             
+                                    <h5><b><i class="far fa-arrow-alt-circle-up text-danger"></i> <span id="sixthNew"></span>%</b> <small class="text-muted"><i>over last 3 days</i></small></h5>
+                                    <p class="card-text mb-0"><b id="sixthTotal"></b> total cases</p>
+                                    <p class="card-text mb-0"><b id="sixthNormal"></b> cases per 100,000 people</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,6 +184,23 @@
                     </div>
                 </div>
             </div>
+            <div class="container py-5 mb-5">
+                <div class="row text-center">
+                    <div class="col">
+                        <h2 class="my-4">Daily Corona Virus Cases Reported, Hospitalized, and in ICU</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <canvas id="chart_daily"></canvas>
+                    </div>
+                </div>
+                <div class="row text-center justify-content-md-center">
+                    <div class="col">
+                        <small class="text-muted">Note, hospital and ICU numbers were not available before March 31.</small>
+                    </div>
+                </div>
+            </div>            
             <div class="container py-5 mb-5">
                 <div class="row text-center">
                     <div class="col">
