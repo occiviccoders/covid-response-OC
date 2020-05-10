@@ -33,8 +33,8 @@ The backend has no real server.  Just me running scripts and pushing for now.
 
 ## Contributing
 * Love for you to get involved!  
+* The goal of this app is to help the local community in any way to get through the covid-19 pandemic.  All suggestions are welcome.  Submit your ideas as a [github issue](https://github.com/occiviccoders/covid-response-OC/issues)
 * For coders, find us on [meetup](https://www.meetup.com/OC-Civic-Coders/) and see our #corona channel on [slack](https://join.slack.com/t/occiviccoders/shared_invite/zt-c7es081j-ShLTVkuKpm5gOKsdiM8szg).
-* For suggestions or corrections contact occiviccoders@gmail.com.  
 
 ## License
 
