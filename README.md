@@ -7,7 +7,7 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 
 * Clone this repo.  
 * Make sure you have NPM, and run `npm install`.
-* There is a node file to scrape data from the OC Public Health website, that's currently manually run with the `nmp run get` command.  This copies data into `assets/js/db.js`. 
+* There is a node file to scrape data from the OC Public Health website, that's currently manually run with the `npm run get` command.  This copies data into `assets/js/db.js`. 
 * After running, I sanity check the data, then run the following command to write out the frontend javascript and json files `npm run write`.  This copies data into `assets/js/data.js` and `assets/js/currentData.json`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
 * I made a script to push the data to github `npm run push`.
 
