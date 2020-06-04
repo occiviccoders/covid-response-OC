@@ -33,8 +33,8 @@ const fetchData = async (url) => {
     let jsonLocation = [];
 
     // parse OC heath info data 
-    let caseArr = parseJS(scripts, "caseArr", true);
-    let hostpitalArr = parseJS(scripts, "hospitalArr", true);
+    let caseArr = parseJS(scripts, "$cases", true);
+    let hostpitalArr = parseJS(scripts, "$hospitalData", true);
     let ageData = parseJS(scripts, "ageData");
     let sexData = parseJS(scripts, "sexData");
     let ageDeathData = parseJS(scripts, "ageDeathData");
