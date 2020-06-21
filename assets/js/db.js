@@ -163,7 +163,10 @@ const cvoc = {
         },
         {
             "city": "Midway City",
-            "location": []
+            "location": [
+                -117.987,
+                33.7447
+            ]
         },
         {
             "city": "Mission Viejo",
@@ -209,7 +212,10 @@ const cvoc = {
         },
         {
             "city": "Rossmoor",
-            "location": []
+            "location": [
+                -118.0851,
+                33.7856
+            ]
         },
         {
             "city": "San Clemente",
