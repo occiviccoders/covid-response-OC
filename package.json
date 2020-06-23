@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.9.0"
   },
   "scripts": {
+    "manual": "npx babel-node assets/js/manualPull.js",
     "get": "npx babel-node assets/js/get.js",
     "write": "node assets/js/write.js",
     "push": "git add --all; git commit -m 'adding todays data'; git push origin master",
