@@ -30007,7 +30007,7 @@ const cvoc = {
             ]
         },
         {
-            "label": "Jun 22",
+            "label": "Jun 21",
             "data": [
                 {
                     "category": "Total Cases",
