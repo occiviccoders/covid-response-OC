@@ -1,183 +1,221 @@
 // Currently running as a script to fetch data
 const axios = require("axios");
-const cheerio = require('cheerio'), cheerioTableparser = require('cheerio-tableparser');
 const fs = require('fs');
 const cvoc= require('./db.js');
 
-// scrape for the covid counts
-const OCUrl = "https://occovid19.ochealthinfo.com/coronavirus-in-oc";
+// Get data from these urls
+const cityUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/arcgis/rest/services/VIEW_LAYER_COVID19_Dashboard_2p0_Cities/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
+const caseUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_democase_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
+const deathUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_demodth_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
+const hospUrl = "https://data.ca.gov/api/3/action/datastore_search?resource_id=42d33765-20fd-44b8-a978-b083b7542225&q=Orange&sort=todays_date%20desc&limit=5";
 
-// function to parse js variables
-const parseJS = function(scripts, variable, array){
-    let result = scripts.slice(scripts.indexOf(variable));
-    if(!array){
-        result = result.slice(result.indexOf("datasets"));
-        result = result.slice(result.indexOf("data: "));
-        result = result.slice(result.indexOf("["), result.indexOf("]")+1);
-    } else {
-        result = result.slice(result.indexOf("["), result.indexOf("];")+1);        
+// create todays date string
+const today = new Date(); 
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const dateString = months[today.getMonth()] + ' ' + today.getDate();
+
+// object to store today's data
+let todayData = { label: dateString };
+
+// get the existing covid dataset on this app
+let newCvoc = { cities: cvoc.cities };
+// prep the current data to remove todays date
+newCvoc.counts = cvoc.counts.filter(function(datum){
+    return datum.label !== dateString;
+});
+
+// writes the data to js files
+const writeData = async () => {
+
+    // to query the hospital data, we use the previous date and convert to iso to match the api data
+    let dateQuery = new Date();
+    dateQuery.setDate(dateQuery.getDate() - 1);
+    dateQuery.setUTCHours(0,0,0,0);
+    dateQuery = dateQuery.toISOString().slice(0,-5);
+
+    // Pull Hospital data
+    const hospResult = await axios.get(hospUrl);
+    const hospData = hospResult.data.result.records.find(function(county){
+        return county.county === "Orange" && county.todays_date === dateQuery;
+    });
+    if (!hospData){
+        console.log("err - hospital data")
     }
-    return JSON.parse(result);
-}
+    
+    // Get case data
+    const caseResult = await axios.get(caseUrl);
+    const caseData = caseResult.data.features[0].attributes;
 
-const fetchData = async (url) => {
-    const today = new Date(); 
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    const dateString = months[today.getMonth()] + ' ' + today.getDate();
-    const result = await axios.get(url);
-    const $ = cheerio.load(result.data);
-    // get the chartjs data from oc health agency
-    const scripts = $('script:not([src])')[0].children[0].data;
-    let newCvoc = { cities: cvoc.cities };
-    let jsonData = [];
-    let jsonLocation = [];
+    const deathResult = await axios.get(deathUrl);
+    const deathData = deathResult.data.features[0].attributes;
 
-    // parse OC heath info data 
-    let caseArr = parseJS(scripts, "$cases", true);
-    let hostpitalArr = parseJS(scripts, "$hospitalData", true);
-    let ageData = parseJS(scripts, "ageData");
-    let sexData = parseJS(scripts, "sexData");
-    let ageDeathData = parseJS(scripts, "ageDeathData");
-    let sexDeathData = parseJS(scripts, "cumuDeathData");
-
-    jsonData = [
+    // Parse data
+    const jsonData = [
         {
             "category": "Total Cases",
             "type": "Cases",
-            "count": caseArr.slice(-1)[0][2],
+            "count": caseData.total_cases,
         },
         {
             "category": "Total Cases",
             "type": "Deaths",
-            "count": sexDeathData.reduce(function(a,b){return a + b;},0),
+            "count": deathData.total_dth,
         },
         {
             "category": "Currently",
             "type": "Hospitalized",
-            "count": hostpitalArr.slice(-1)[0][1],
+            "count": hospData.hospitalized_covid_confirmed_patients,
         },
         {
             "category": "Currently",
             "type": "ICU",
-            "count": hostpitalArr.slice(-1)[0][2],
+            "count": hospData.icu_covid_confirmed_patients,
         },
         {
             "category": "Male",
             "type": "Cases",
-            "count": sexData[0],
+            "count": caseData.case_male,
         },
         {
             "category": "Male",
             "type": "Deaths",
-            "count": sexDeathData[0],
+            "count": deathData.dth_male,
         },
         {
             "category": "Female",
             "type": "Cases",
-            "count": sexData[1],
+            "count": caseData.case_female,
         },
         {
             "category": "Female",
             "type": "Deaths",
-            "count": sexDeathData[1],
+            "count": deathData.dth_female,
         },
         {
             "category": "Unknown",
             "type": "Cases",
-            "count": sexData[2],
+            "count": caseData.case_unk_sex,
         },
         {
             "category": "Unknown",
             "type": "Deaths",
-            "count": sexDeathData[2],
+            "count": deathData.dth_unk_sex,
+        },
+        {
+            "category": "Other",
+            "type": "Cases",
+            "count": caseData.case_oth_sex,
+        },
+        {
+            "category": "Other",
+            "type": "Deaths",
+            "count": deathData.dth_oth_sex,
         },
         {
             "category": "<18",
             "type": "Cases",
-            "count": ageData[0],
+            "count": caseData.case_0_17,
         },
         {
             "category": "<18",
             "type": "Deaths",
-            "count": ageDeathData[0],
+            "count": deathData.dth_0_17,
         },
         {
             "category": "18 - 24",
             "type": "Cases",
-            "count": ageData[1],
+            "count": caseData.case_18_24,
         },
         {
             "category": "18 - 24",
             "type": "Deaths",
-            "count": ageDeathData[1],
+            "count": deathData.dth_18_24,
         },
         {
             "category": "25 - 34",
             "type": "Cases",
-            "count": ageData[2],
+            "count": caseData.case_25_34,
         },
         {
             "category": "25 - 34",
             "type": "Deaths",
-            "count": ageDeathData[2],
+            "count": deathData.dth_25_34,
         },
         {
             "category": "35 - 44",
             "type": "Cases",
-            "count": ageData[3],
+            "count": caseData.case_35_44,
         },
         {
             "category": "35 - 44",
             "type": "Deaths",
-            "count": ageDeathData[3],
+            "count": deathData.dth_35_44,
         },
         {
-            "category": "45 - 64",
+            "category": "45 - 54",
             "type": "Cases",
-            "count": ageData[4],
+            "count": caseData.case_45_54,
         },
         {
-            "category": "45 - 64",
+            "category": "45 - 54",
             "type": "Deaths",
-            "count": ageDeathData[4],
+            "count": deathData.dth_45_54,
         },
         {
-            "category": "≥ 65",
+            "category": "55 - 64",
             "type": "Cases",
-            "count": ageData[5],
+            "count": caseData.case_55_64,
         },
         {
-            "category": "≥ 65",
+            "category": "55 - 64",
             "type": "Deaths",
-            "count": ageDeathData[5],
+            "count": deathData.dth_55_64,
+        },
+        {
+            "category": "65 - 74",
+            "type": "Cases",
+            "count": caseData.case_65_74,
+        },
+        {
+            "category": "65 - 74",
+            "type": "Deaths",
+            "count": deathData.dth_65_74,
+        },
+        {
+            "category": "75 - 84",
+            "type": "Cases",
+            "count": caseData.case_75_84,
+        },
+        {
+            "category": "75 - 84",
+            "type": "Deaths",
+            "count": deathData.dth_75_84,
+        },
+        {
+            "category": "≥ 85",
+            "type": "Cases",
+            "count": caseData.Case_85,
+        },
+        {
+            "category": "≥ 85",
+            "type": "Deaths",
+            "count": deathData.dth_85,
         }
     ];
 
-    // prep the current data to remove todays date
-    newCvoc.counts = cvoc.counts.filter(function(datum){
-        return datum.label !== dateString;
-    });    
-    // parse location
-    cheerioTableparser($);
-    // fetch and parse the city data
-    let text = $('table').filter(function (i, element) {
-        let not = $(this).text().indexOf("2020 Orange County Coronavirus Case Counts");
-        let has = $(this).text().indexOf("POPULATION");
-        if(has>-1 && not<0){
-            return $(this);
+
+    // pull data from OC arcgis dashboard and parse
+    const cityResult = await axios.get(cityUrl);
+    const jsonLocation = cityResult.data.features.map(function(city){
+        return { 
+            city: city.attributes.City,
+            population: city.attributes.Pop,
+            cases: city.attributes.Cases,
+            deaths: city.attributes.Deaths
         }
-    }).parsetable(false, false, true);
+    });
 
-    // jsonify data  
-    for (let y = 1; y < text[0].length; y++) { 
-        jsonLocation.push({
-            city:text[0][y],
-            population:text[1][y],
-            cases: text[2][y],
-        })
-    }
-
-    // check for new cities
+    // check for any new cities
     jsonLocation.map(function(city){
         let checkData = newCvoc.cities.find(function(index){
             return index.city === city.city || city.city === "Other*" || city.city === "Unknown**";
@@ -212,6 +250,6 @@ const fetchData = async (url) => {
         // In case of a error throw err. 
         if (err) throw err; 
     })
-};
-fetchData(OCUrl);
+}
+writeData();
 
