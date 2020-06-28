@@ -1,4 +1,4 @@
-# covid-response-OC
+# [covid-response-OC](https://www.occiviccoders.com/covid-response-OC/)
 A dashboard to track the spread of the Corona Virus (COVID-19) in the local Orange County community. Let's work together to help prevent the spread of this disease! The dashboard includes daily trends by age group, gender, and travel verses community spread.
 
 ## Data Sources
