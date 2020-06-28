@@ -28,7 +28,7 @@ newCvoc.counts = cvoc.counts.filter(function(datum){
 const writeData = async () => {
 
     // to query the hospital data, we use the previous date and convert to iso to match the api data
-    let dateQuery = new Date();
+    let dateQuery = new Date(today.getTime() - (today.getTimezoneOffset() * 60000));
     dateQuery.setDate(dateQuery.getDate() - 1);
     dateQuery.setUTCHours(0,0,0,0);
     dateQuery = dateQuery.toISOString().slice(0,-5);
@@ -203,17 +203,47 @@ const writeData = async () => {
         }
     ];
 
+    // function to convert number to string
+    const numToString = function(x) {
+        if(x){
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");            
+        } else {
+            return "";
+        }
+    }
 
     // pull data from OC arcgis dashboard and parse
     const cityResult = await axios.get(cityUrl);
     const jsonLocation = cityResult.data.features.map(function(city){
+        let population = city.attributes.Pop;
+        if(population){
+            population = numToString(city.attributes.Pop);
+        } else {
+            population = "Not Available"
+        }
         return { 
             city: city.attributes.City,
-            population: city.attributes.Pop,
-            cases: city.attributes.Cases,
-            deaths: city.attributes.Deaths
+            population: population,
+            cases: numToString(city.attributes.Cases),
+            deaths: numToString(city.attributes.Deaths)
         }
+    }).sort(function(a, b){
+        if ( a.city < b.city ){
+            return -1;
+        }
+        if ( a.city > b.city ){
+            return 1;
+        }
+        return 0;
     });
+
+    // add all of OC
+    jsonLocation.push({
+        "city": "All of Orange County",
+        "population": "3,222,498",
+        "cases": numToString(caseData.total_cases),
+        "deaths": numToString(deathData.total_dth)
+    })
 
     // check for any new cities
     jsonLocation.map(function(city){

@@ -153,19 +153,28 @@ cvoc.chartByAge = function(){
         if (datum.category==='35 - 44' && datum.type==='Cases'){
             returnArray[3] += Number(datum.count);
         }
-        if (datum.category==='45 - 64' && datum.type==='Cases'){
+        if (datum.category==='45 - 54' && datum.type==='Cases'){
             returnArray[4] += Number(datum.count);
         }
-        if (datum.category==='≥ 65' && datum.type==='Cases'){
+        if (datum.category==='55 - 64' && datum.type==='Cases'){
             returnArray[5] += Number(datum.count);
         }
+        if (datum.category==='65 - 74' && datum.type==='Cases'){
+            returnArray[6] += Number(datum.count);
+        }
+        if (datum.category==='75 - 84' && datum.type==='Cases'){
+            returnArray[7] += Number(datum.count);
+        }
+        if (datum.category==='≥ 85' && datum.type==='Cases'){
+            returnArray[8] += Number(datum.count);
+        }
         return returnArray;
-    },[0, 0, 0, 0, 0, 0])
+    },[0, 0, 0, 0, 0, 0, 0, 0, 0])
     return {
-        labels:['Under 18', '18 to 24', '25 to 34', '35 to 44', '45 to 64', '65 and Over'],
+        labels:['Under 18', '18 to 24', '25 to 34', '35 to 44', '45 to 54', '55 to 64', '65 to 74', '75 to 84', '85 and Over'],
         datasets: [{
             data: data,
-            backgroundColor: ["#250902","#376E3F", "#F2D396","#DBB164","#FF9A17","#C6601B"]
+            backgroundColor: ["#250902","#376E3F","#9BDD92","#F2D396","#DBB164","#DEA47E","#FF9A17","#C6601B","#9E6240"]
         }],
     }
 }
@@ -312,7 +321,7 @@ cvoc.threeDayTrends = function(){
                 return index.city === city.city;
             });
             if(refCity){
-                city.threeDayRise = Math.abs(100*(city.cases - refCity.cases)/refCity.cases).toFixed(0); 
+                city.threeDayRise = Math.abs(100*(Number(city.cases.replace(",", "")) - Number(refCity.cases.replace(",", "")))/Number(refCity.cases.replace(",", ""))).toFixed(0);              
                 return city;                
             }
         }
@@ -534,8 +543,8 @@ cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
 cvoc.map = new mapboxgl.Map({
     container: "cvoc-map",
     style: 'mapbox://styles/mapbox/light-v9',
-    center: cvoc.cities[0].location,
-    zoom: 9,
+    center: [ -117.8265, 33.6846],
+    zoom: 9.6,
 })
 
 cvoc.map.on('load', function(){

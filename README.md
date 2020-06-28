@@ -1,5 +1,5 @@
 # covid-response-OC
-The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-OC/) was made to help the local community with covid-19. Data provided by [OC Public Health Care Agency](https://www.ochealthinfo.com/phs/about/epidasmt/epi/dip/prevention/novel_coronavirus).  
+The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-OC/) was made to help the local community with covid-19. Data provided by [OC Public Health Care Agency Dashboard](https://ochca.maps.arcgis.com/apps/opsdashboard/index.html#/cc4859c8c522496b9f21c451de2fedae) and [California Open Data Portal](https://data.ca.gov/dataset/covid-19-hospital-data).  
 
 
 
@@ -7,7 +7,7 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 
 * Clone this repo.  
 * Make sure you have NPM, and run `npm install`.
-* There is a node file to scrape data from the OC Public Health website, that's currently manually run with the `npm run get` command.  This copies data into `assets/js/db.js`. 
+* There is a node file to get data from the OC Public Health Dashboard and California Open Data Portal, which is currently manually run with the `npm run get` command.  This copies data into `assets/js/db.js`. 
 * After running, I sanity check the data, then run the following command to write out the frontend javascript and json files `npm run write`.  This copies data into `assets/js/data.js` and `assets/js/currentData.json`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
 * I made a script to push the data to github `npm run push`.
 
@@ -21,20 +21,27 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 * [d3js](https://d3js.org/) - For the map pareto
 * [fontawesome](https://fontawesome.com/) - For the nice icons
 
-## Back End
+### Back End
 The backend has no real server.  Just me running scripts and pushing for now.
 * [Nodejs](https://nodejs.org/en/) - For scraping and running scripts
 * [Babel](https://babeljs.io/) - For compiling ES6 in node so that I can push/pull data from `assets/js/data.js`
 * [gulp](https://gulpjs.com/) - To minify and publish JS/CSS from the `src` folder to `public` folder.
+* [axios](https://github.com/axios/axios) - to make api calls.
 
 ## Authors
 
 * **Andrew Akagawa** - *Initial work* - [OC Civic Coders](https://www.occiviccoders.com)
 
 ## Contributing
+
 * Love for you to get involved!  
 * The goal of this app is to help the local community in any way to get through the covid-19 pandemic.  All suggestions are welcome.  Submit your ideas as a [github issue](https://github.com/occiviccoders/covid-response-OC/issues)
-* For coders, find us on [meetup](https://www.meetup.com/OC-Civic-Coders/) and see our #corona channel on [slack](https://join.slack.com/t/occiviccoders/shared_invite/zt-c7es081j-ShLTVkuKpm5gOKsdiM8szg).
+* For coders, find us on [meetup](https://www.meetup.com/OC-Civic-Coders/) and see our #corona channel on [slack](https://join.slack.com/t/occiviccoders/shared_invite/zt-c7es081j-ShLTVkuKpm5gOKsdiM8szg). 
+* Visit the [issues](https://github.com/occiviccoders/covid-response-OC/issues) tab to contribute to open issues.
+* Create a new branch.
+* The `assets/js` files have all the scripts to pull data from the APIs and store them.
+* The frontend source code can be found in the `src` directory. To contribute to the source code files in the `src` directory, run `gulp watch` to sync your changes to the `public` directory.
+* When ready, create a pull request.
 
 ## License
 
