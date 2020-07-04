@@ -4,7 +4,7 @@ const fs = require('fs');
 const cvoc= require('./db.js');
 
 // Get data from these urls
-const cityUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/arcgis/rest/services/VIEW_LAYER_COVID19_Dashboard_2p0_Cities/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
+const cityUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/VIEWLAYER_Dashboard_CityUpdate7220/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
 const caseUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_democase_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
 const deathUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_demodth_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
 const hospUrl = "https://data.ca.gov/api/3/action/datastore_search?resource_id=42d33765-20fd-44b8-a978-b083b7542225&q=Orange&sort=todays_date%20desc&limit=5";
@@ -215,18 +215,20 @@ const writeData = async () => {
     // pull data from OC arcgis dashboard and parse
     const cityResult = await axios.get(cityUrl);
     const jsonLocation = cityResult.data.features.map(function(city){
-        let population = city.attributes.Pop;
+        let population = city.attributes.Total_Pop;
         if(population){
-            population = numToString(city.attributes.Pop);
+            population = numToString(city.attributes.Total_Pop);
         } else {
             population = "Not Available"
         }
         return { 
             city: city.attributes.City,
             population: population,
-            cases: numToString(city.attributes.Cases),
-            deaths: numToString(city.attributes.Deaths)
+            cases: numToString(city.attributes.Tot_Cases),
+            deaths: numToString(city.attributes.Tot_Deaths)
         }
+    }).filter(function(city){
+        return city.city;
     }).sort(function(a, b){
         if ( a.city < b.city ){
             return -1;

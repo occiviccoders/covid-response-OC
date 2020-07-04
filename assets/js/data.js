@@ -34574,32 +34574,32 @@ const cvoc = {
                 {
                     "city": "Aliso Viejo",
                     "population": "51,372",
-                    "cases": "85",
+                    "cases": "94",
                     "deaths": "1"
                 },
                 {
                     "city": "Anaheim",
                     "population": "359,339",
-                    "cases": "2,818",
-                    "deaths": "86"
+                    "cases": "2,925",
+                    "deaths": "87"
                 },
                 {
                     "city": "Brea",
                     "population": "45,606",
-                    "cases": "112",
+                    "cases": "120",
                     "deaths": "1"
                 },
                 {
                     "city": "Buena Park",
                     "population": "83,384",
-                    "cases": "460",
+                    "cases": "472",
                     "deaths": "4"
                 },
                 {
                     "city": "Costa Mesa",
                     "population": "115,830",
-                    "cases": "387",
-                    "deaths": "2"
+                    "cases": "421",
+                    "deaths": "3"
                 },
                 {
                     "city": "Coto de Caza",
@@ -34610,7 +34610,7 @@ const cvoc = {
                 {
                     "city": "Cypress",
                     "population": "49,833",
-                    "cases": "148",
+                    "cases": "153",
                     "deaths": "4"
                 },
                 {
@@ -34622,67 +34622,67 @@ const cvoc = {
                 {
                     "city": "Fountain Valley",
                     "population": "56,652",
-                    "cases": "134",
+                    "cases": "137",
                     "deaths": "6"
                 },
                 {
                     "city": "Fullerton",
                     "population": "142,824",
-                    "cases": "629",
-                    "deaths": "16"
+                    "cases": "669",
+                    "deaths": "17"
                 },
                 {
                     "city": "Garden Grove",
                     "population": "175,155",
-                    "cases": "823",
-                    "deaths": "9"
+                    "cases": "862",
+                    "deaths": "10"
                 },
                 {
                     "city": "Huntington Beach",
                     "population": "203,761",
-                    "cases": "717",
+                    "cases": "754",
                     "deaths": "40"
                 },
                 {
                     "city": "Irvine",
                     "population": "280,202",
-                    "cases": "446",
+                    "cases": "475",
                     "deaths": "5"
                 },
                 {
                     "city": "La Habra",
                     "population": "63,542",
-                    "cases": "302",
+                    "cases": "316",
                     "deaths": "6"
                 },
                 {
                     "city": "La Palma",
                     "population": "15,820",
-                    "cases": "48",
+                    "cases": "52",
                     "deaths": ""
                 },
                 {
                     "city": "Ladera Ranch",
                     "population": "30,288",
-                    "cases": "38",
+                    "cases": "40",
                     "deaths": ""
                 },
                 {
                     "city": "Laguna Beach",
                     "population": "23,358",
-                    "cases": "66",
+                    "cases": "67",
                     "deaths": ""
                 },
                 {
                     "city": "Laguna Hills",
                     "population": "31,572",
-                    "cases": "84",
+                    "cases": "91",
                     "deaths": "5"
                 },
                 {
                     "city": "Laguna Niguel",
                     "population": "66,748",
-                    "cases": "91",
+                    "cases": "96",
                     "deaths": ""
                 },
                 {
@@ -34694,55 +34694,55 @@ const cvoc = {
                 {
                     "city": "Lake Forest",
                     "population": "86,346",
-                    "cases": "182",
+                    "cases": "192",
                     "deaths": "1"
                 },
                 {
                     "city": "Los Alamitos",
                     "population": "11,721",
-                    "cases": "97",
+                    "cases": "99",
                     "deaths": "14"
                 },
                 {
                     "city": "Midway City",
                     "population": "8,374",
-                    "cases": "41",
+                    "cases": "42",
                     "deaths": ""
                 },
                 {
                     "city": "Mission Viejo",
                     "population": "96,434",
-                    "cases": "191",
+                    "cases": "207",
                     "deaths": "2"
                 },
                 {
                     "city": "Newport Beach",
                     "population": "87,180",
-                    "cases": "334",
+                    "cases": "352",
                     "deaths": "2"
                 },
                 {
                     "city": "Orange",
                     "population": "141,691",
-                    "cases": "679",
+                    "cases": "712",
                     "deaths": "15"
                 },
                 {
                     "city": "Placentia",
                     "population": "52,333",
-                    "cases": "270",
+                    "cases": "280",
                     "deaths": "1"
                 },
                 {
                     "city": "Rancho Mission Viejo",
                     "population": "Not Available",
-                    "cases": "19",
+                    "cases": "22",
                     "deaths": ""
                 },
                 {
                     "city": "Rancho Santa Margarita",
                     "population": "48,960",
-                    "cases": "69",
+                    "cases": "75",
                     "deaths": ""
                 },
                 {
@@ -34754,61 +34754,61 @@ const cvoc = {
                 {
                     "city": "San Clemente",
                     "population": "65,405",
-                    "cases": "116",
+                    "cases": "120",
                     "deaths": "2"
                 },
                 {
                     "city": "San Juan Capistrano",
                     "population": "36,821",
-                    "cases": "93",
+                    "cases": "94",
                     "deaths": "2"
                 },
                 {
                     "city": "Santa Ana",
                     "population": "337,716",
-                    "cases": "3,061",
+                    "cases": "3,166",
                     "deaths": "95"
                 },
                 {
                     "city": "Seal Beach",
                     "population": "25,073",
-                    "cases": "119",
-                    "deaths": "8"
+                    "cases": "122",
+                    "deaths": "9"
                 },
                 {
                     "city": "Stanton",
                     "population": "39,307",
-                    "cases": "184",
+                    "cases": "188",
                     "deaths": "3"
                 },
                 {
                     "city": "Trabuco Canyon",
                     "population": "Not Available",
-                    "cases": "42",
+                    "cases": "46",
                     "deaths": ""
                 },
                 {
                     "city": "Tustin",
                     "population": "81,369",
-                    "cases": "309",
+                    "cases": "330",
                     "deaths": "6"
                 },
                 {
                     "city": "Villa Park",
                     "population": "5,933",
-                    "cases": "23",
+                    "cases": "25",
                     "deaths": ""
                 },
                 {
                     "city": "Westminster",
                     "population": "92,610",
-                    "cases": "301",
+                    "cases": "312",
                     "deaths": "10"
                 },
                 {
                     "city": "Yorba Linda",
                     "population": "68,706",
-                    "cases": "190",
+                    "cases": "200",
                     "deaths": "2"
                 },
                 {

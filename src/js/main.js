@@ -44,7 +44,10 @@ cvoc.getCountsByLocation = function(cityName, date){
         return city.city===cityName;
     });
     if (datum && datum.cases) {
-        return Number(datum.cases);
+        if(isNaN(datum.cases)){
+            datum.cases = Number(datum.cases.replace(",", ""))
+        }
+        return datum.cases;
     } else {
         return 0;
     }
