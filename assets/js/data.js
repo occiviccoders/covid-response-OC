@@ -246,6 +246,13 @@ const cvoc = {
             ]
         },
         {
+            "city": "Silverado",
+            "location": [
+                -117.63611,
+                33.74611
+            ]
+        },
+        {
             "city": "Stanton",
             "location": [
                 -117.9931,
