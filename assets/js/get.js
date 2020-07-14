@@ -5,6 +5,7 @@ const cvoc= require('./db.js');
 
 // Get data from these urls
 // City URL is broken data is here but locked: https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/VIEW_LAYER_citylayer_covid19_update070620/FeatureServer/0
+// http://www.arcgis.com/home/webmap/viewer.html?url=https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/VIEW_LAYER_citylayer_covid19_update070620/FeatureServer/0&source=sd
 const cityUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/VIEWLAYER_Dashboard_CityUpdate7220/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
 const caseUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_democase_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
 const deathUrl = "https://services2.arcgis.com/LORzk2hk9xzHouw9/ArcGIS/rest/services/occovid_demodth_csv/FeatureServer/0/query?where=0%3D0&outFields=%2A&f=json";
