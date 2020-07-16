@@ -1,8 +1,15 @@
 // set the mapbox token
 mapboxgl.accessToken = "pk.eyJ1IjoiaW5pdGlhbGFwcHMiLCJhIjoiY2pzMnBzZGZnMDM0azQ5bDdyOHdraHV1ZyJ9.JdYkI5UwxhJgJOkbm2_8rw";
 
-// note data are from data.js... Im not proud of that, but was quick to hack together
-// use cvoc for data object
+// get the data
+function getData(url){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",url,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+const cvoc = JSON.parse(getData("https://raw.githubusercontent.com/occiviccoders/covid-response-OC-data/master/assets/js/data.json"));
+
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
 const ctx_daily = document.getElementById('chart_daily').getContext('2d');  // for the chart

@@ -10,14 +10,6 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 * Clone this repo.  
 * Make sure you have NPM, and run `npm install`.
 
-### Retrieving Covid Data
-* The `assets/js` files have all the scripts to pull data from the APIs and store them.
-* There is a node file to get data from the OC Public Health Dashboard and California Open Data Portal, which is currently manually run with the `npm run get` command.  This copies data into `assets/js/db.js`. 
-* Unfortunately, as of 7/6, we can no longer pull city numbers as the json file needs a token.  This is an open issue, but for now, I add city data manually...
-* After running, I sanity check the data, then run the following command to write out the frontend javascript and json files `npm run write`.  This copies data into `assets/js/data.js` and `assets/js/currentData.json`.  It's a messy process, but a quick and dirty solution for having no back end, with much room for improvement.
-* I made a script to push the data to github `npm run push`.
-* These commands are run on a daily basis.
-
 ### Displaying The Visualizations
 * The frontend source code can be found in the `src` directory. To contribute to the source code files in the `src` directory, run `gulp watch` to sync your changes to the `public` directory.
 
@@ -32,11 +24,8 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 * [fontawesome](https://fontawesome.com/) - For the nice icons
 
 ### Back End
-The backend has no real server.  Just me running scripts and pushing for now.
-* [Nodejs](https://nodejs.org/en/) - For scraping and running scripts
-* [Babel](https://babeljs.io/) - For compiling ES6 in node so that I can push/pull data from `assets/js/data.js`
-* [gulp](https://gulpjs.com/) - To minify and publish JS/CSS from the `src` folder to `public` folder.
-* [axios](https://github.com/axios/axios) - to make api calls.
+The backend has no real server.  Just me running scripts and pushing for now. See the following repo for this:
+* [Covid Response OC Data](https://github.com/occiviccoders/covid-response-OC-data) - For scraping and running scripts
 
 ## Authors
 

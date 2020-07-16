@@ -5,9 +5,6 @@
   "main": "gulpfile.js",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "axios": "^0.19.2",
-    "cheerio": "^1.0.0-rc.3",
-    "cheerio-tableparser": "^1.0.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-concat": "^2.6.1",
@@ -22,10 +19,6 @@
     "@babel/preset-env": "^7.9.0"
   },
   "scripts": {
-    "manual": "npx babel-node assets/js/manualPull.js",
-    "get": "npx babel-node assets/js/get.js",
-    "write": "node assets/js/write.js",
-    "push": "git add --all; git commit -m 'adding todays data'; git push origin master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
