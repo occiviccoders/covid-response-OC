@@ -1,17 +1,18 @@
 // set the mapbox token
 mapboxgl.accessToken = "pk.eyJ1IjoiaW5pdGlhbGFwcHMiLCJhIjoiY2pzMnBzZGZnMDM0azQ5bDdyOHdraHV1ZyJ9.JdYkI5UwxhJgJOkbm2_8rw";
 
-// note data are from data.js... Im not proud of that, but was quick to hack together
-// use cvoc for data object
+// get the data
+function getData(url){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",url,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+const cvoc = JSON.parse(getData("https://raw.githubusercontent.com/occiviccoders/covid-response-OC-data/master/assets/js/data.json"));
+
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
 const ctx_daily = document.getElementById('chart_daily').getContext('2d');  // for the chart
-const ctx_gender = document.getElementById('chart_gender').getContext('2d');  // for the chart
-const ctx_age = document.getElementById('chart_age').getContext('2d');  // for the chart
-const ctx_age_by_time = document.getElementById('chart_age_by_time').getContext('2d');  // for the chart
-
-// set the categories
-cvoc.categories = ['Total Cases', 'Male', 'Female', '<18', '18 - 49', '50 - 64', '≥ 65'];
 
 // Browser check
 cvoc.checkBrowser = function() {
@@ -309,16 +310,6 @@ cvoc.loadButtons = function(){
     });
 }
 
-// Update age by time chart
-cvoc.updateCategoryByTime = function(category){
-    const updated = cvoc.categoryByTime(category);
-    cvoc.chart_age_by_time.data.datasets[0].data = updated.datasets[0].data;
-    cvoc.chart_age_by_time.data.datasets[1].data = updated.datasets[1].data;
-    cvoc.chart_age_by_time.data.datasets[2].data = updated.datasets[2].data;
-    cvoc.chart_age_by_time.data.datasets[3].data = updated.datasets[3].data;
-    cvoc.chart_age_by_time.options.title.text = category;
-    cvoc.chart_age_by_time.update();
-}
 
 // load the charts
 cvoc.chart_totals = new Chart (ctx_totals, {
@@ -372,63 +363,6 @@ cvoc.chart_daily = new Chart (ctx_daily, {
                 }
             }]
         }
-    }
-});
-
-cvoc.chart_gender = new Chart (ctx_gender, {
-    type: 'doughnut',
-    data: cvoc.chartByGender(),
-    options: {
-        legend: {
-            position: 'left',
-            labels: {
-                fontSize: 16
-            }
-        },
-        title: {
-            display: true,
-            text: 'By Gender',
-            fontSize: 20
-        },
-        aspectRatio: 1.2,
-    }
-});
-
-cvoc.chart_age = new Chart (ctx_age, {
-    type: 'doughnut',
-    data: cvoc.chartByAge(),
-    options: {
-        legend: {
-            position: 'left',
-            labels: {
-                fontSize: 16
-            }
-        },
-        title: {
-            display: true,
-            text: 'By Age',
-            fontSize: 20
-        },
-        aspectRatio: 1.2,
-    }
-});
-
-cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
-    type: 'line',
-    data: cvoc.categoryByTime("Total Cases"),
-    options: {
-        tooltips: {
-            mode: 'index'
-        },
-        legend: {
-            display: false,
-        },
-        title: {
-            display: true,
-            text: 'Total Cases',
-            fontSize: 20
-        },
-        aspectRatio: 1.5,
     }
 });
 

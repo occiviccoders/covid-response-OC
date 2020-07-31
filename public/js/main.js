@@ -13,12 +13,6 @@ const cvoc = JSON.parse(getData("https://raw.githubusercontent.com/occiviccoders
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
 const ctx_daily = document.getElementById('chart_daily').getContext('2d');  // for the chart
-const ctx_gender = document.getElementById('chart_gender').getContext('2d');  // for the chart
-const ctx_age = document.getElementById('chart_age').getContext('2d');  // for the chart
-const ctx_age_by_time = document.getElementById('chart_age_by_time').getContext('2d');  // for the chart
-
-// set the categories
-cvoc.categories = ['Total Cases', 'Male', 'Female', '<18', '18 - 49', '50 - 64', '≥ 65'];
 
 // Browser check
 cvoc.checkBrowser = function() {
@@ -126,68 +120,6 @@ cvoc.chartDaily = function(){
     });
 }
 
-// parse the count data by gender
-cvoc.chartByGender = function(){
-    const last = cvoc.counts.slice(-1)[0];
-    const data = last.data.reduce(function(returnArray, datum){
-        if (datum.category==='Male' && datum.type==='Cases'){
-            returnArray[0] += Number(datum.count);
-        }
-        if (datum.category==='Female' && datum.type==='Cases'){
-            returnArray[1] += Number(datum.count);
-        }
-        return returnArray;
-    },[0, 0])
-    return {
-        labels:['Male', 'Female'],
-        datasets: [{
-            data: data,
-            backgroundColor: ['rgb(63, 127, 191, 0.6)','rgba(187, 26, 163, 0.6)']
-        }],
-    }
-}
-
-// parse the count data by age
-cvoc.chartByAge = function(){
-    const last = cvoc.counts.slice(-1)[0];
-    const data = last.data.reduce(function(returnArray, datum){
-        if (datum.category==='<18' && datum.type==='Cases'){
-            returnArray[0] += Number(datum.count);
-        }
-        if (datum.category==='18 - 24' && datum.type==='Cases'){
-            returnArray[1] += Number(datum.count);
-        }
-        if (datum.category==='25 - 34' && datum.type==='Cases'){
-            returnArray[2] += Number(datum.count);
-        }
-        if (datum.category==='35 - 44' && datum.type==='Cases'){
-            returnArray[3] += Number(datum.count);
-        }
-        if (datum.category==='45 - 54' && datum.type==='Cases'){
-            returnArray[4] += Number(datum.count);
-        }
-        if (datum.category==='55 - 64' && datum.type==='Cases'){
-            returnArray[5] += Number(datum.count);
-        }
-        if (datum.category==='65 - 74' && datum.type==='Cases'){
-            returnArray[6] += Number(datum.count);
-        }
-        if (datum.category==='75 - 84' && datum.type==='Cases'){
-            returnArray[7] += Number(datum.count);
-        }
-        if (datum.category==='≥ 85' && datum.type==='Cases'){
-            returnArray[8] += Number(datum.count);
-        }
-        return returnArray;
-    },[0, 0, 0, 0, 0, 0, 0, 0, 0])
-    return {
-        labels:['Under 18', '18 to 24', '25 to 34', '35 to 44', '45 to 54', '55 to 64', '65 to 74', '75 to 84', '85 and Over'],
-        datasets: [{
-            data: data,
-            backgroundColor: ["#250902","#376E3F","#9BDD92","#F2D396","#DBB164","#DEA47E","#FF9A17","#C6601B","#9E6240"]
-        }],
-    }
-}
 
 // parse the data into geoJson
 cvoc.geoJson = function(){
@@ -220,54 +152,6 @@ cvoc.geoJson = function(){
             return cities;
         },[])
     }
-}
-
-// parse the count data into chart categories data
-cvoc.categoryByTime = function(category){
-    return cvoc.counts.reduce(function(returnArray, date, index){
-        // oc stopped catagorizing after mar 26 (21 data points)
-        if(index<21){
-            returnArray.labels.push(date.label);
-            returnArray.datasets[0].data.push(cvoc.getCounts(category, "Travel Related", date));
-            returnArray.datasets[1].data.push(cvoc.getCounts(category, "Person to Person Spread*", date));
-            returnArray.datasets[2].data.push(cvoc.getCounts(category, "Community Acquired**", date));
-            returnArray.datasets[3].data.push(cvoc.getCounts(category, "Under Investigation", date));
-            returnArray.datasets[4].data.push(cvoc.getCounts("Total Cases", "Cases", date));            
-        }
-        return returnArray;
-    },{
-        labels:[],
-        datasets: [{
-            label:  'Travel Related',
-            fill: false,
-            data: [],
-            backgroundColor: 'rgba(6, 58, 110, 1)',
-            borderColor: 'rgba(6, 58, 110, 1)',
-        },{
-            label:  'Person to Person Spread*',
-            fill: false,
-            data: [],
-            backgroundColor: 'rgba(6, 110, 83, 1)',
-            borderColor: 'rgba(6, 110, 83, 1)',
-        },{
-            label:  'Community Acquired**',
-            fill: false,
-            data: [],
-            backgroundColor: 'rgba(183, 122, 10, 1)',
-            borderColor: 'rgba(183, 122, 10, 1)',
-        },{
-            label:  'Under Investigation',
-            fill: false,
-            data: [],
-            backgroundColor: 'rgba(100, 100, 100, 1)',
-            borderColor: 'rgba(100, 100, 100, 1)',
-        },{
-            label:  'All',
-            data: [],
-            backgroundColor: 'rgba(200, 200, 200, 0.3)',
-            borderColor: 'rgba(200, 200, 200, .3)',
-        }],
-    });
 }
 
 // sets the daily trend
@@ -331,8 +215,8 @@ cvoc.threeDayTrends = function(){
                 return index.city === city.city;
             });
             if(refCity){
-                city.threeDayRise = Math.abs(100*(Number(city.cases.replace(",", "")) - Number(refCity.cases.replace(",", "")))/Number(refCity.cases.replace(",", ""))).toFixed(0);              
-                return city;                
+                city.threeDayRise = Math.abs(100*(Number(city.cases.replace(",", "")) - Number(refCity.cases.replace(",", "")))/Number(refCity.cases.replace(",", ""))).toFixed(0);
+                return city;
             }
         }
     }).sort(function(a, b){
@@ -405,8 +289,8 @@ cvoc.loadCitySelect = function(){
                     backgroundColor: 'rgba(198, 91, 16, 0.6)',
                     borderColor: 'rgba(198, 91, 16, 1)',
                 }],
-            }); 
-            cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = max * 1.2;       
+            });
+            cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = max * 1.2;
         } else {
             // otherwise reset the data
             cvoc.chart_totals.data = cvoc.chartTotals();
@@ -426,16 +310,6 @@ cvoc.loadButtons = function(){
     });
 }
 
-// Update age by time chart
-cvoc.updateCategoryByTime = function(category){
-    const updated = cvoc.categoryByTime(category);
-    cvoc.chart_age_by_time.data.datasets[0].data = updated.datasets[0].data;
-    cvoc.chart_age_by_time.data.datasets[1].data = updated.datasets[1].data;
-    cvoc.chart_age_by_time.data.datasets[2].data = updated.datasets[2].data;
-    cvoc.chart_age_by_time.data.datasets[3].data = updated.datasets[3].data;
-    cvoc.chart_age_by_time.options.title.text = category;
-    cvoc.chart_age_by_time.update();
-}
 
 // load the charts
 cvoc.chart_totals = new Chart (ctx_totals, {
@@ -492,63 +366,6 @@ cvoc.chart_daily = new Chart (ctx_daily, {
     }
 });
 
-cvoc.chart_gender = new Chart (ctx_gender, {
-    type: 'doughnut',
-    data: cvoc.chartByGender(),
-    options: {
-        legend: {
-            position: 'left',
-            labels: {
-                fontSize: 16
-            }
-        },
-        title: {
-            display: true,
-            text: 'By Gender',
-            fontSize: 20
-        },
-        aspectRatio: 1.2,
-    }
-});
-
-cvoc.chart_age = new Chart (ctx_age, {
-    type: 'doughnut',
-    data: cvoc.chartByAge(),
-    options: {
-        legend: {
-            position: 'left',
-            labels: {
-                fontSize: 16
-            }
-        },
-        title: {
-            display: true,
-            text: 'By Age',
-            fontSize: 20
-        },
-        aspectRatio: 1.2,
-    }
-});
-
-cvoc.chart_age_by_time= new Chart (ctx_age_by_time, {
-    type: 'line',
-    data: cvoc.categoryByTime("Total Cases"),
-    options: {
-        tooltips: {
-            mode: 'index'
-        },
-        legend: {
-            display: false,
-        },
-        title: {
-            display: true,
-            text: 'Total Cases',
-            fontSize: 20
-        },
-        aspectRatio: 1.5,
-    }
-});
-
 // load the map
 cvoc.map = new mapboxgl.Map({
     container: "cvoc-map",
@@ -571,7 +388,7 @@ cvoc.map.on('load', function(){
             if (feature.properties.cases > maxRadius){
                 maxRadius = feature.properties.cases;
             }
-            return feature;            
+            return feature;
         }
     })
     radiusMultiplier = 50/maxRadius;
@@ -714,7 +531,7 @@ cvoc.map.on('load', function(){
             // re parse the geodata
             data.features = data.features.map(function(city, index, startArray){
                 if(cvoc.displayed === 'Total Cases'){
-                    city.properties.displayed = city.properties.cases;         
+                    city.properties.displayed = city.properties.cases;
                 } else {
                     city.properties.displayed = Math.round(city.properties.normalized * 100000);
                 }
@@ -748,7 +565,7 @@ cvoc.map.on('load', function(){
         cvoc.map.getSource('cityLayer').setData(data);
     }
 
-    // function to update the sidebar 
+    // function to update the sidebar
     cvoc.updateSidebar = function(){
         const sidebar = d3.select('#cvoc-map-sidebar');
         const maxDisplayed = Math.max.apply(Math, data.features.map(function(city) { return city.properties.displayed; }))
@@ -769,7 +586,7 @@ cvoc.map.on('load', function(){
             return "-webkit-linear-gradient(left, #DDDDDD, #DDDDDD " + percent + "%, transparent " + percent + "%, transparent 100%)"
         })
     }
-    
+
     // function to load the sidebar
     cvoc.loadSidebar = function () {
         const sidebar = d3.select('#cvoc-map-sidebar');
