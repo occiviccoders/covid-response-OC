@@ -303,13 +303,6 @@ cvoc.loadCitySelect = function(){
     select.value = "All of Orange County";
 }
 
-// activate category buttons
-cvoc.loadButtons = function(){
-    cvoc.categories.map(function(category){
-        document.getElementById(category).addEventListener("click", function(e){ cvoc.updateCategoryByTime(category)}, false);
-    });
-}
-
 
 // load the charts
 cvoc.chart_totals = new Chart (ctx_totals, {
@@ -633,5 +626,3 @@ cvoc.dailyTrend('Orange County');
 cvoc.threeDayTrends();
 // load the city select
 cvoc.loadCitySelect();
-// load buttons
-cvoc.loadButtons();
