@@ -146,26 +146,40 @@ cvoc.geoJson = function(){
 }
 
 // sets the daily trend
-cvoc.dailyTrend = function(city){
+cvoc.dailyTrend = function(city, type, inputTrend){
     const trendElement = document.getElementById("trend");
     const cityElement = document.getElementById("city");
+    const introElement = document.getElementById("intro-trends");
     const today = cvoc.getCountsByLocation(city, cvoc.counts.slice(-1)[0]);
     const yesterday = cvoc.getCountsByLocation(city, cvoc.counts.slice(-2)[0]);
-    const percent = 100*(today-yesterday)/yesterday;
+    let percent = 0;
     let trend = "";
+    trendElement.style.textDecoration = "underline";
+    trendElement.style.fontStyle = "italic";
     // relabel city
     if(city === 'All of Orange County'){
         city = 'Orange County';
     }
-    if(percent<=0){
-        trend = "up " + Math.abs(percent.toFixed(0)) + "%";
-        trendElement.style.color = "green";
+    if(type === "Daily"){
+        introElement.innerHTML = "Corona Virus 14 Day Trends are";
+        if(inputTrend<=0){
+            trend = "Falling " + Math.abs(inputTrend.toFixed(2)) + "/Day";
+            trendElement.style.color = "green";
+        } else {
+            trend = "Rising " + Math.abs(inputTrend.toFixed(2)) + "/Day";
+            trendElement.style.color = "#d80000";
+        }
     } else {
-        trend = "up " + percent.toFixed(0) + "%";
-        trendElement.style.color = "#d80000";
+        introElement.innerHTML = "Total Corona Virus Cases are";        
+        percent = 100*(today-yesterday)/yesterday;
+        if(percent<=0){
+            trend = "down " + Math.abs(percent.toFixed(0)) + "%";
+            trendElement.style.color = "green";
+        } else {
+            trend = "up " + percent.toFixed(0) + "%";
+            trendElement.style.color = "#d80000";
+        }
     }
-    trendElement.style.textDecoration = "underline";
-    trendElement.style.fontStyle = "italic";
     trendElement.innerHTML = trend;
     cityElement.innerHTML = city;
 }
@@ -245,8 +259,32 @@ cvoc.loadCitySelect = function(){
     const select = document.getElementById("chart_city_select");
     let city = "All of Orange County";
     let graph = "Total";
+    let trend = 0;
+    const trendData = function(data){
+        let set = []
+        try{
+            set = data.datasets[0].data.slice(Math.max(data.datasets[0].data.length - 14, 1));
+        } catch (err){
+        }
+        let n = set.length;
+        let sums = set.reduce(function(total, datum, index){
+            total.xy += (index+1) * datum;
+            total.x += index + 1;
+            total.y += datum;
+            total.xsq += ((index+1)*(index+1));
+            return total;
+        }, {
+            xy: 0,
+            x: 0,
+            y: 0,
+            xsq: 0,
+        })
+        trend = ((n*sums.xy)-(sums.x * sums.y))/((n*sums.xsq)-(sums.x*sums.x));
+        return trend;
+    }    
     const parseData = function(){
         let max = 0;
+        let trend = 0;
         if(graph === "Daily"){
             // graph is set to daily
             // parse the data & updated the graph
@@ -277,6 +315,7 @@ cvoc.loadCitySelect = function(){
                 }],
             });
             cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = max * 1.1;
+            trend = trendData(cvoc.chart_totals.data);
         } else {
             // Graph is set to Total
             if(city !=='All of Orange County'){
@@ -308,7 +347,9 @@ cvoc.loadCitySelect = function(){
             }            
         }
         // update chart
-        cvoc.chart_totals.update();        
+        cvoc.chart_totals.update();
+        // update daily trend
+        cvoc.dailyTrend(city, graph, trend);     
     }
     // update the order and map the options and load the select button
     last.location.sort(function(a, b){
@@ -328,8 +369,6 @@ cvoc.loadCitySelect = function(){
         city = this.value;
         // parse the data
         parseData();
-        // update daily trend
-        cvoc.dailyTrend(city);
     });
     select.value = city;
     // activate the type buttons
@@ -669,7 +708,7 @@ cvoc.map.on('load', function(){
 })
 
 // get the daily rates
-cvoc.dailyTrend('All of Orange County');
+cvoc.dailyTrend('All of Orange County', 'Total');
 // get the three day trend
 cvoc.threeDayTrends();
 // load the city select
