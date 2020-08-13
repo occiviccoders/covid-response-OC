@@ -63,17 +63,20 @@
                     <div class="col">
                         <h2 class="my-4">Total Corona Virus Cases are <strong id="trend"></strong> in <span id="city"></span></h2>
                         <div class="row justify-content-md-center">
-                            <div class="col col-lg-6 col-md-9">
+                            <div class="col col-lg-8 col-md-9">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text">Select A City: </label>
                                     </div>
-                                    <select class="custom-select" id="chart_totals_select">
+                                    <select class="custom-select" id="chart_city_select">
                                     </select>
+                                    <div class="input-group-append">
+                                        <button id='total-cases' type="button" class="btn btn-responsive btn-info active"><i class="fas fa-chart-bar"></i> Total Cases</button>
+                                        <button id='daily-cases' type="button" class="btn btn-responsive btn-info"><i class="fas fa-chart-line"></i> Daily Cases</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <p>Let's Beat The Curve!</p>
                     </div>
                 </div>
                 <div class="row">
@@ -211,6 +214,7 @@
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="./vendors/fontawesome-free/js/all.min.js"></script>
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
         <script src="https://d3js.org/d3.v3.min.js"></script>
