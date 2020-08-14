@@ -84,8 +84,28 @@ cvoc.chartTotals = function(){
     });
 }
 
-// parse the count data into chartjs format data
-cvoc.chartDaily = function(){
+// parse city totals
+cvoc.chartCityTotal = function(city){
+    return cvoc.counts.reduce(function(returnArray, date){
+        if(date.location && date.location.length){
+            let count = cvoc.getCountsByLocation(city, date);
+            returnArray.labels.push(date.label);
+            returnArray.datasets[0].data.push(count);
+        }
+        return returnArray;
+    },{
+        labels:[],
+        datasets: [{
+            label:  'Total Cases',
+            data: [],
+            backgroundColor: 'rgba(198, 91, 16, 0.6)',
+            borderColor: 'rgba(198, 91, 16, 1)',
+        }],
+    });
+}
+
+// parse the hospital data into chartjs format data
+cvoc.chartHospital = function(){
     return cvoc.counts.reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
         returnArray.datasets[0].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
@@ -111,6 +131,55 @@ cvoc.chartDaily = function(){
     });
 }
 
+// parse the daily data
+cvoc.chartDaily = function(city){
+    return cvoc.counts.reduce(function(returnArray, date, index, startArray){
+        let todayCount = cvoc.getCountsByLocation(city, date);
+        let yesterdayCount = 0;
+        // get the difference
+        if(index){
+            yesterdayCount = cvoc.getCountsByLocation(city, startArray[index-1]);
+        }
+        returnArray.labels.push(date.label);
+        returnArray.datasets[0].data.push(todayCount - yesterdayCount);
+        return returnArray;
+    },{
+        labels:[],
+        datasets: [{
+            label:  'Cases Reported',
+            data: [],
+            backgroundColor: 'rgba(90, 90, 90, 0.33)',
+            borderColor: 'rgba(90, 90, 90, 1)',
+            lineTension: 0.25,
+            borderWidth: 2,
+            type: 'line',
+        }],
+    });
+}
+
+// 14 day trend
+cvoc.trendData = function(data){
+    let set = []
+    try{
+        set = data.datasets[0].data.slice(Math.max(data.datasets[0].data.length - 14, 1));
+    } catch (err){
+    }
+    let n = set.length;
+    let sums = set.reduce(function(total, datum, index){
+        total.xy += (index+1) * datum;
+        total.x += index + 1;
+        total.y += datum;
+        total.xsq += ((index+1)*(index+1));
+        return total;
+    }, {
+        xy: 0,
+        x: 0,
+        y: 0,
+        xsq: 0,
+    })
+    trend = ((n*sums.xy)-(sums.x * sums.y))/((n*sums.xsq)-(sums.x*sums.x));
+    return trend;
+}  
 
 // parse the data into geoJson
 cvoc.geoJson = function(){
@@ -146,39 +215,21 @@ cvoc.geoJson = function(){
 }
 
 // sets the daily trend
-cvoc.dailyTrend = function(city, type, inputTrend){
+cvoc.dailyTrend = function(city, trend){
     const trendElement = document.getElementById("trend");
     const cityElement = document.getElementById("city");
-    const introElement = document.getElementById("intro-trends");
-    const today = cvoc.getCountsByLocation(city, cvoc.counts.slice(-1)[0]);
-    const yesterday = cvoc.getCountsByLocation(city, cvoc.counts.slice(-2)[0]);
-    let percent = 0;
-    let trend = "";
     trendElement.style.textDecoration = "underline";
     trendElement.style.fontStyle = "italic";
     // relabel city
     if(city === 'All of Orange County'){
         city = 'Orange County';
     }
-    if(type === "Daily"){
-        introElement.innerHTML = "Corona Virus 14 Day Trends are";
-        if(inputTrend<=0){
-            trend = "Falling " + Math.abs(inputTrend.toFixed(2)) + "/Day";
-            trendElement.style.color = "green";
-        } else {
-            trend = "Rising " + Math.abs(inputTrend.toFixed(2)) + "/Day";
-            trendElement.style.color = "#d80000";
-        }
+    if(trend<=0){
+        trend = "Falling " + Math.abs(trend.toFixed(2)) + "/Day";
+        trendElement.style.color = "green";
     } else {
-        introElement.innerHTML = "Total Corona Virus Cases are";        
-        percent = 100*(today-yesterday)/yesterday;
-        if(percent<=0){
-            trend = "down " + Math.abs(percent.toFixed(0)) + "%";
-            trendElement.style.color = "green";
-        } else {
-            trend = "up " + percent.toFixed(0) + "%";
-            trendElement.style.color = "#d80000";
-        }
+        trend = "Rising " + Math.abs(trend.toFixed(2)) + "/Day";
+        trendElement.style.color = "#d80000";
     }
     trendElement.innerHTML = trend;
     cityElement.innerHTML = city;
@@ -259,97 +310,29 @@ cvoc.loadCitySelect = function(){
     const select = document.getElementById("chart_city_select");
     let city = "All of Orange County";
     let graph = "Total";
-    let trend = 0;
-    const trendData = function(data){
-        let set = []
-        try{
-            set = data.datasets[0].data.slice(Math.max(data.datasets[0].data.length - 14, 1));
-        } catch (err){
-        }
-        let n = set.length;
-        let sums = set.reduce(function(total, datum, index){
-            total.xy += (index+1) * datum;
-            total.x += index + 1;
-            total.y += datum;
-            total.xsq += ((index+1)*(index+1));
-            return total;
-        }, {
-            xy: 0,
-            x: 0,
-            y: 0,
-            xsq: 0,
-        })
-        trend = ((n*sums.xy)-(sums.x * sums.y))/((n*sums.xsq)-(sums.x*sums.x));
-        return trend;
-    }    
     const parseData = function(){
-        let max = 0;
-        let trend = 0;
+        // set the daily data and trend
+        const chartDaily = cvoc.chartDaily(city);
+        const trend = cvoc.trendData(chartDaily);
         if(graph === "Daily"){
             // graph is set to daily
             // parse the data & updated the graph
-            cvoc.chart_totals.data = cvoc.counts.reduce(function(returnArray, date, index, startArray){
-                let todayCount = cvoc.getCountsByLocation(city, date);
-                let yesterdayCount = 0;
-                // get the difference
-                if(index){
-                    yesterdayCount = cvoc.getCountsByLocation(city, startArray[index-1]);
-                }
-                // find the max
-                if((todayCount - yesterdayCount) > max){
-                    max = todayCount - yesterdayCount;
-                }
-                returnArray.labels.push(date.label);
-                returnArray.datasets[0].data.push(todayCount - yesterdayCount);
-                return returnArray;
-            },{
-                labels:[],
-                datasets: [{
-                    label:  'Cases Reported',
-                    data: [],
-                    backgroundColor: 'rgba(90, 90, 90, 0.33)',
-                    borderColor: 'rgba(90, 90, 90, 1)',
-                    lineTension: 0.25,
-                    borderWidth: 2,
-                    type: 'line',
-                }],
-            });
-            cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = max * 1.1;
-            trend = trendData(cvoc.chart_totals.data);
+            cvoc.chart_totals.data = chartDaily;
         } else {
             // Graph is set to Total
             if(city !=='All of Orange County'){
                 // parse the data & updated the graph
-                cvoc.chart_totals.data = cvoc.counts.reduce(function(returnArray, date){
-                    if(date.location && date.location.length){
-                        let count = cvoc.getCountsByLocation(city, date);
-                        returnArray.labels.push(date.label);
-                        returnArray.datasets[0].data.push(count);
-                        // find the max
-                        if(count > max){
-                            max = count;
-                        }
-                    }
-                    return returnArray;
-                },{
-                    labels:[],
-                    datasets: [{
-                        label:  'Total Cases',
-                        data: [],
-                        backgroundColor: 'rgba(198, 91, 16, 0.6)',
-                        borderColor: 'rgba(198, 91, 16, 1)',
-                    }],
-                });
-                cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = max * 1.1;
+                cvoc.chart_totals.data = cvoc.chartCityTotal(city);
             } else {
                 // otherwise reset the data
                 cvoc.chart_totals.data = cvoc.chartTotals();
             }            
         }
+        cvoc.chart_totals.options.scales.yAxes[0].ticks.suggestedMax = cvoc.chart_totals.data.datasets[0].data.reduce((a, b) => a > b ? a : b) * 1.1;
         // update chart
         cvoc.chart_totals.update();
         // update daily trend
-        cvoc.dailyTrend(city, graph, trend);     
+        cvoc.dailyTrend(city, trend);     
     }
     // update the order and map the options and load the select button
     last.location.sort(function(a, b){
@@ -390,7 +373,6 @@ cvoc.loadCitySelect = function(){
     });
 }
 
-
 // load the charts
 cvoc.chart_totals = new Chart (ctx_totals, {
     type: 'bar',
@@ -421,7 +403,7 @@ cvoc.chart_totals = new Chart (ctx_totals, {
 
 cvoc.chart_daily = new Chart (ctx_daily, {
     type: 'line',
-    data: cvoc.chartDaily(),
+    data: cvoc.chartHospital(),
     options: {
         responsive: true,
         tooltips: {
@@ -708,7 +690,7 @@ cvoc.map.on('load', function(){
 })
 
 // get the daily rates
-cvoc.dailyTrend('All of Orange County', 'Total');
+cvoc.dailyTrend('All of Orange County', cvoc.trendData(cvoc.chartDaily('All of Orange County')));
 // get the three day trend
 cvoc.threeDayTrends();
 // load the city select
