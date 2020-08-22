@@ -8,7 +8,7 @@ function getData(url){
     Httpreq.send(null);
     return Httpreq.responseText;          
 }
-const cvoc = JSON.parse(getData("https://raw.githubusercontent.com/occiviccoders/covid-response-OC-data/master/assets/js/data.json"));
+const cvoc = JSON.parse(getData("https://www.occiviccoders.com/covid-response-OC-data/assets/js/data.json"));
 
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
