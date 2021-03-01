@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" href="vendors/fontawesome-free/css/all.min.css">
+        <link href="./node_modules/nouislider/distribute/nouislider.min.css" rel="stylesheet">
         <link href='./public/css/cvoc.min.css' rel='stylesheet' />
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
         <meta http-equiv="Pragma" content="no-cache">
@@ -86,6 +87,7 @@
                 <div class="row">
                     <div class="col">
                         <canvas id="chart_totals"></canvas>
+                        <div id="sliderMain"></div>
                     </div>
                 </div>
                 <div class="row text-center justify-content-md-center">
@@ -199,6 +201,7 @@
                 <div class="row">
                     <div class="col">
                         <canvas id="chart_daily"></canvas>
+                        <div id="sliderHospital"></div>
                     </div>
                 </div>
                 <div class="row text-center justify-content-md-center">
@@ -222,6 +225,7 @@
         <script src="./vendors/fontawesome-free/js/all.min.js"></script>
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
         <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="./node_modules/nouislider/distribute/nouislider.min.js"></script>
         <script src='./public/js/main.js'></script>
     </body>
 </html>

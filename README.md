@@ -22,6 +22,7 @@ The [OC Covid 19 Community Watch](https://www.occiviccoders.com/covid-response-O
 * [Mapbox](https://www.mapbox.com/) - For the map
 * [d3js](https://d3js.org/) - For the map pareto
 * [fontawesome](https://fontawesome.com/) - For the nice icons
+* [nouislider](https://refreshless.com/nouislider/) - For the date range sliders
 
 ### Back End
 The backend has no real server.  Just me running scripts and pushing for now. See the following repo for this:

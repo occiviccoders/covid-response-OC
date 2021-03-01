@@ -10,6 +10,54 @@ function getData(url){
 }
 const cvoc = JSON.parse(getData("https://www.occiviccoders.com/covid-response-OC-data/assets/js/data.json"));
 
+// converts index to date string
+cvoc.dateFormater = {
+    // 'to' the formatted value. Receives a number.
+    to: function (value) {
+        return cvoc.counts[Math.round(value)].label;
+    },
+    // 'from' the formatted value.
+    // Receives a string, should return a number.
+    from: function (value) {
+        return cvoc.counts.findIndex(function(index){
+            return index.label === value;
+        });
+    }
+}
+
+cvoc.dateFilter = function(date, index){
+    let dateRange = sliderMain.noUiSlider.get();
+    let startIndex = cvoc.dateFormater.from(dateRange[0]);
+    let endIndex = cvoc.dateFormater.from(dateRange[1]);
+    return index >= startIndex && index <= endIndex;
+}
+
+// main date slider
+noUiSlider.create(sliderMain, {
+    start: [0, cvoc.dateFormater.to(cvoc.counts.length - 1)],
+    step: 1,
+    connect: true,
+    range: {
+        'min': 0,
+        'max': cvoc.counts.length - 1
+    },
+    tooltips: true,
+    format: cvoc.dateFormater,
+});
+
+// hospital date slider
+noUiSlider.create(sliderHospital, {
+    start: [0, cvoc.dateFormater.to(cvoc.counts.length - 1)],
+    step: 1,
+    connect: true,
+    range: {
+        'min': 0,
+        'max': cvoc.counts.length - 1
+    },
+    tooltips: true,
+    format: cvoc.dateFormater,
+});
+
 // charts
 const ctx_totals = document.getElementById('chart_totals').getContext('2d');  // for the chart
 const ctx_daily = document.getElementById('chart_daily').getContext('2d');  // for the chart
@@ -61,7 +109,8 @@ cvoc.getCountsByLocation = function(cityName, date){
 
 // parse the count data into chartjs format data
 cvoc.chartTotals = function(){
-    return cvoc.counts.reduce(function(returnArray, date){
+    return cvoc.counts.filter(cvoc.dateFilter).
+    reduce(function(returnArray, date){
         returnArray.labels.push(date.label);
         returnArray.datasets[0].data.push(cvoc.getCounts("Total Cases", "Cases", date));
         returnArray.datasets[1].data.push(cvoc.getCounts("Total Cases", "Deaths", date));
@@ -86,7 +135,7 @@ cvoc.chartTotals = function(){
 
 // parse city totals
 cvoc.chartCityTotal = function(city){
-    return cvoc.counts.reduce(function(returnArray, date){
+    return cvoc.counts.filter(cvoc.dateFilter).reduce(function(returnArray, date){
         if(date.location && date.location.length){
             let count = cvoc.getCountsByLocation(city, date);
             returnArray.labels.push(date.label);
@@ -106,10 +155,15 @@ cvoc.chartCityTotal = function(city){
 
 // parse the hospital data into chartjs format data
 cvoc.chartHospital = function(){
-    return cvoc.counts.reduce(function(returnArray, date){
-        returnArray.labels.push(date.label);
-        returnArray.datasets[0].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
-        returnArray.datasets[1].data.push(cvoc.getCounts("Currently", "ICU", date));
+    return cvoc.counts.reduce(function(returnArray, date, index){
+        let dateRange = sliderHospital.noUiSlider.get();
+        let startIndex = cvoc.dateFormater.from(dateRange[0]);
+        let endIndex = cvoc.dateFormater.from(dateRange[1]);
+        if(index >= startIndex && index <= endIndex){
+            returnArray.labels.push(date.label);
+            returnArray.datasets[0].data.push(cvoc.getCounts("Currently", "Hospitalized", date));
+            returnArray.datasets[1].data.push(cvoc.getCounts("Currently", "ICU", date));            
+        }
         return returnArray;
     },{
         labels:[],
@@ -134,14 +188,19 @@ cvoc.chartHospital = function(){
 // parse the daily data
 cvoc.chartDaily = function(city){
     return cvoc.counts.reduce(function(returnArray, date, index, startArray){
-        let todayCount = cvoc.getCountsByLocation(city, date);
-        let yesterdayCount = 0;
-        // get the difference
-        if(index){
-            yesterdayCount = cvoc.getCountsByLocation(city, startArray[index-1]);
+        let dateRange = sliderMain.noUiSlider.get();
+        let startIndex = cvoc.dateFormater.from(dateRange[0]);
+        let endIndex = cvoc.dateFormater.from(dateRange[1]);
+        if(index >= startIndex && index <= endIndex){
+            let todayCount = cvoc.getCountsByLocation(city, date);
+            let yesterdayCount = 0;
+            // get the difference
+            if(index){
+                yesterdayCount = cvoc.getCountsByLocation(city, startArray[index-1]);
+            }
+            returnArray.labels.push(date.label);
+            returnArray.datasets[0].data.push(todayCount - yesterdayCount);            
         }
-        returnArray.labels.push(date.label);
-        returnArray.datasets[0].data.push(todayCount - yesterdayCount);
         return returnArray;
     },{
         labels:[],
@@ -370,6 +429,16 @@ cvoc.loadCitySelect = function(){
         graph = "Daily";
         // parse the data
         parseData();
+    });
+    // activate datefilter
+    sliderMain.noUiSlider.on('update', function () {
+        parseData();
+    });
+    // activate the date hospital filter
+    sliderHospital.noUiSlider.on('update', function () {
+        // set the data
+        cvoc.chart_daily.data = cvoc.chartHospital();
+        cvoc.chart_daily.update();
     });
 }
 

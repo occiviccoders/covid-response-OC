@@ -7,9 +7,9 @@
  */
 var gulp = require('gulp'),
     minifyCSS = require('gulp-minify-css'),
-    concat = require('gulp-concat')
-    uglify = require('gulp-uglify')
-    prefix = require('gulp-autoprefixer')
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    prefix = require('gulp-autoprefixer'),
     sass = require('gulp-sass');
 
 // Minifies JS
